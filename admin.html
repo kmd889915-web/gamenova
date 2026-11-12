@@ -1,1 +1,319 @@
 
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GameNova Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101522;color:#fff;font-family:Arial,sans-serif}
+header{background:#192238;padding:18px;font-size:22px;font-weight:bold}
+main{max-width:1000px;margin:auto;padding:18px}
+.card{background:#1b263b;padding:18px;border-radius:12px;margin:15px 0}
+input,button{padding:12px;border:0;border-radius:7px;font-size:15px}
+input{background:#fff;color:#111;width:100%;margin:8px 0}
+button{background:#5475ff;color:white;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+.hidden{display:none}
+.stat{font-size:28px;font-weight:bold;color:#75a0ff}
+small{color:#bac5d8}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #39445a;font-size:13px}
+.table-wrap{overflow-x:auto}
+.status{color:#ffcc70;margin-top:10px}
+.slot{border:1px solid #39445a;padding:12px;border-radius:9px;margin:12px 0}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.row input{flex:1;min-width:130px}
+.logout{float:right;background:#e34e58}
+</style>
+</head>
+<body>
+
+<header>
+GameNova Admin
+<button id="logoutBtn" class="logout hidden">Logout</button>
+</header>
+
+<main>
+<section id="loginSection" class="card">
+<h2>Admin Login</h2>
+<p><small>শুধু অনুমোদিত Admin প্রবেশ করতে পারবেন।</small></p>
+<input id="adminPassword" type="password" placeholder="Admin Password">
+<button id="loginBtn">Login to Admin Website</button>
+<p id="loginMessage" class="status"></p>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="card">
+<h2>Admin Dashboard</h2>
+<p>GameNova Website Management</p>
+</div>
+
+<div class="card">
+<h3>Total Users</h3>
+<div id="userCount" class="stat">লোড হচ্ছে...</div>
+<button id="refreshUsers">Refresh Users</button>
+<p id="userMessage" class="status"></p>
+</div>
+
+<div class="card">
+<h3>Registered Users</h3>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>User ID</th>
+</tr>
+</thead>
+<tbody id="userTable"></tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+<h3>Advertisement Control</h3>
+<p>Global Advertisement Status</p>
+<p id="globalStatus">লোড হচ্ছে...</p>
+<button id="toggleAds">Loading...</button>
+<p id="adMessage" class="status"></p>
+</div>
+
+<div class="card">
+<h3>Advertisement Slots</h3>
+<p><small>Firebase-এর adSlots collection-এ থাকা Slot এখানে দেখা যাবে।</small></p>
+<div id="slotsContainer">লোড হচ্ছে...</div>
+</div>
+
+<div class="card">
+<h3>Website Information</h3>
+<p>Website: GameNova</p>
+<p>Project: gamenova-9a784</p>
+<p><small>গেমের স্কোর ও লিডারবোর্ডের তথ্য Firebase-এ সংরক্ষিত না থাকলে এখানে দেখা যাবে না।</small></p>
+</div>
+</section>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import {
+ getAuth,
+ signInWithEmailAndPassword,
+ onAuthStateChanged,
+ signOut
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
+import {
+ getFirestore,
+ collection,
+ getDocs,
+ doc,
+ getDoc,
+ setDoc,
+ serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
+const firebaseConfig = {
+ apiKey: "AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
+ authDomain: "gamenova-9a784.firebaseapp.com",
+ projectId: "gamenova-9a784",
+ storageBucket: "gamenova-9a784.firebasestorage.app",
+ messagingSenderId: "515993651839",
+ appId: "1:515993651839:web:4cfee979840f4248120d4a"
+};
+
+const ADMIN_EMAIL = "kmd889915@gmail.com";
+const ADMIN_UID = "TfBr1g4xmjS9Y8geKfnNEfmlNh82";
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+
+function showLogin(message=""){
+ $("loginSection").classList.remove("hidden");
+ $("dashboard").classList.add("hidden");
+ $("logoutBtn").classList.add("hidden");
+ $("loginMessage").textContent=message;
+}
+
+function showDashboard(){
+ $("loginSection").classList.add("hidden");
+ $("dashboard").classList.remove("hidden");
+ $("logoutBtn").classList.remove("hidden");
+ loadUsers();
+ loadAds();
+}
+
+$("loginBtn").addEventListener("click",async()=>{
+ const password=$("adminPassword").value;
+ if(!password){
+  $("loginMessage").textContent="পাসওয়ার্ড লিখুন।";
+  return;
+ }
+ $("loginBtn").disabled=true;
+ $("loginMessage").textContent="লগইন হচ্ছে...";
+ try{
+  const result=await signInWithEmailAndPassword(auth,ADMIN_EMAIL,password);
+  if(result.user.uid!==ADMIN_UID){
+   await signOut(auth);
+   throw new Error("এই অ্যাকাউন্ট Admin হিসেবে অনুমোদিত নয়।");
+  }
+  $("adminPassword").value="";
+ }catch(error){
+  $("loginMessage").textContent="লগইন ব্যর্থ: "+error.message;
+ }finally{
+  $("loginBtn").disabled=false;
+ }
+});
+
+$("logoutBtn").addEventListener("click",async()=>{
+ await signOut(auth);
+ showLogin("আপনি Logout করেছেন।");
+});
+
+onAuthStateChanged(auth,async user=>{
+ if(!user){
+  showLogin();
+  return;
+ }
+ if(user.uid!==ADMIN_UID){
+  await signOut(auth);
+  showLogin("অনুমতি নেই।");
+  return;
+ }
+ showDashboard();
+});
+
+async function loadUsers(){
+ $("userMessage").textContent="ইউজার তথ্য লোড হচ্ছে...";
+ $("userTable").replaceChildren();
+ try{
+  const snapshot=await getDocs(collection(db,"users"));
+  $("userCount").textContent=snapshot.size;
+  if(snapshot.empty){
+   $("userTable").textContent="কোনো ইউজার পাওয়া যায়নি।";
+  }
+  snapshot.forEach(item=>{
+   const data=item.data();
+   const tr=document.createElement("tr");
+   [data.name||"নাম নেই",data.email||"ইমেইল নেই",item.id].forEach(value=>{
+    const td=document.createElement("td");
+    td.textContent=value;
+    tr.appendChild(td);
+   });
+   $("userTable").appendChild(tr);
+  });
+  $("userMessage").textContent="ইউজার তথ্য আপডেট হয়েছে।";
+ }catch(error){
+  $("userCount").textContent="লোড হয়নি";
+  $("userMessage").textContent="সমস্যা: "+error.message;
+ }
+}
+
+$("refreshUsers").addEventListener("click",loadUsers);
+
+let adsEnabled=false;
+
+async function loadAds(){
+ try{
+  const configRef=doc(db,"adSlots","config");
+  const snap=await getDoc(configRef);
+  adsEnabled=snap.exists() ? snap.data().globalEnabled===true : false;
+  updateAdButton();
+
+  const slots=await getDocs(collection(db,"adSlots"));
+  const container=$("slotsContainer");
+  container.replaceChildren();
+
+  let found=0;
+  slots.forEach(item=>{
+   if(item.id==="config") return;
+   found++;
+
+   const data=item.data();
+   const box=document.createElement("div");
+   box.className="slot";
+
+   const heading=document.createElement("h4");
+   heading.textContent="Slot: "+item.id;
+
+   const enabled=document.createElement("input");
+   enabled.type="checkbox";
+   enabled.checked=data.enabled===true;
+   enabled.style.width="auto";
+
+   const label=document.createElement("label");
+   label.appendChild(enabled);
+   label.appendChild(document.createTextNode(" এই Slot চালু রাখুন"));
+
+   const adId=document.createElement("input");
+   adId.placeholder="Monetag Ad Unit ID";
+   adId.value=data.adUnitId||"";
+
+   const save=document.createElement("button");
+   save.textContent="Save Slot";
+
+   const message=document.createElement("p");
+   message.className="status";
+
+   save.addEventListener("click",async()=>{
+    save.disabled=true;
+    message.textContent="সেভ হচ্ছে...";
+    try{
+     await setDoc(doc(db,"adSlots",item.id),{
+      enabled:enabled.checked,
+      adUnitId:adId.value.trim(),
+      network:"monetag",
+      updatedAt:serverTimestamp()
+     },{merge:true});
+     message.textContent="সেভ হয়েছে।";
+    }catch(error){
+     message.textContent="সমস্যা: "+error.message;
+    }finally{
+     save.disabled=false;
+    }
+   });
+
+   box.append(heading,label,adId,save,message);
+   container.appendChild(box);
+  });
+
+  if(found===0){
+   container.textContent="এখনো কোনো Advertisement Slot তৈরি করা হয়নি।";
+  }
+ }catch(error){
+  $("slotsContainer").textContent="বিজ্ঞাপনের তথ্য লোড হয়নি: "+error.message;
+ }
+}
+
+function updateAdButton(){
+ $("globalStatus").textContent=adsEnabled?"বিজ্ঞাপন চালু":"বিজ্ঞাপন বন্ধ";
+ $("toggleAds").textContent=adsEnabled?"Turn OFF Ads":"Turn ON Ads";
+}
+
+$("toggleAds").addEventListener("click",async()=>{
+ $("toggleAds").disabled=true;
+ try{
+  const nextState=!adsEnabled;
+  await setDoc(doc(db,"adSlots","config"),{
+   globalEnabled:nextState,
+   updatedAt:serverTimestamp()
+  },{merge:true});
+  adsEnabled=nextState;
+  updateAdButton();
+  $("adMessage").textContent="বিজ্ঞাপনের সেটিংস সেভ হয়েছে।";
+ }catch(error){
+  $("adMessage").textContent="সমস্যা: "+error.message;
+ }finally{
+  $("toggleAds").disabled=false;
+ }
+});
+</script>
+</body>
+</html>
