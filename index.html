@@ -8,14 +8,12 @@
 
 <style>
 *{box-sizing:border-box}
-
 body{
  margin:0;
  font-family:Arial,sans-serif;
  background:#0b1020;
  color:white
 }
-
 header{
  padding:18px;
  display:flex;
@@ -26,126 +24,54 @@ header{
  flex-wrap:wrap;
  gap:12px
 }
-
-.logo{
- font-size:24px;
- font-weight:bold;
- color:#8b7cff
-}
-
+.logo{font-size:24px;font-weight:bold;color:#8b7cff}
 button{
- border:0;
- padding:12px 17px;
- border-radius:10px;
- background:#7657ff;
- color:white;
- font-weight:bold;
- cursor:pointer
+ border:0;padding:12px 17px;border-radius:10px;
+ background:#7657ff;color:white;font-weight:bold;cursor:pointer
 }
-
 button:disabled{opacity:.5}
-
-main{
- max-width:1050px;
- margin:auto;
- padding:22px 16px
-}
-
-.hero{
- text-align:center;
- padding:30px 10px
-}
-
+main{max-width:1050px;margin:auto;padding:22px 16px}
+.hero{text-align:center;padding:30px 10px}
 .hero h1{font-size:32px}
-
 .hero p,.card p{color:#aab5d0}
-
 .section-title{margin-top:30px}
-
 .games{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
  gap:16px
 }
-
 .card,.profile-card{
- background:#151f38;
- border:1px solid #293858;
- border-radius:16px;
- padding:20px;
- text-align:center
+ background:#151f38;border:1px solid #293858;
+ border-radius:16px;padding:20px;text-align:center
 }
-
 .emoji{font-size:42px}
-
-.card button{
- width:100%;
- margin-top:10px
-}
-
+.card button{width:100%;margin-top:10px}
 .quiz{
- margin-top:24px;
- padding:24px;
- text-align:center;
- border-radius:16px;
- background:linear-gradient(120deg,#392a83,#173e70)
+ margin-top:24px;padding:24px;text-align:center;
+ border-radius:16px;background:linear-gradient(120deg,#392a83,#173e70)
 }
-
 #authButtons,#userArea{
- display:none;
- align-items:center;
- gap:10px
+ display:none;align-items:center;gap:10px
 }
-
-#userName{
- font-size:13px;
- color:#cbd5ee
-}
-
+#userName{font-size:13px;color:#cbd5ee}
 #dashboard{display:none}
-
-.profile-card{
- margin-bottom:15px;
- text-align:left
-}
-
+.profile-card{margin-bottom:15px;text-align:left}
 .info{
- padding:13px;
- margin-top:10px;
- background:#202c49;
- border-radius:10px;
- overflow-wrap:anywhere
+ padding:13px;margin-top:10px;
+ background:#202c49;border-radius:10px;overflow-wrap:anywhere
 }
-
-.info span{
- color:#aab5d0;
- font-size:13px
-}
-
-.info strong{
- display:block;
- margin-top:6px
-}
-
+.info span{color:#aab5d0;font-size:13px}
+.info strong{display:block;margin-top:6px}
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
  gap:14px
 }
-
 #message{
- color:#aab5d0;
- text-align:center;
- margin-top:20px;
+ color:#aab5d0;text-align:center;margin-top:20px;
  overflow-wrap:anywhere
 }
-
-footer{
- text-align:center;
- padding:25px;
- color:#77839f;
- font-size:13px
-}
+footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
 </style>
 </head>
 
@@ -214,7 +140,6 @@ footer{
  <h2>👤 My Dashboard</h2>
 
  <div class="profile-card">
-
   <h3>My Profile</h3>
 
   <div class="info">
@@ -232,6 +157,10 @@ footer{
    <strong id="profileUID">Loading...</strong>
   </div>
 
+  <div class="info">
+   <span>Account Created</span>
+   <strong id="profileCreated">Loading...</strong>
+  </div>
  </div>
 
  <div class="grid">
@@ -295,6 +224,15 @@ import {
 } from
 "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
+import {
+ getFirestore,
+ doc,
+ getDoc,
+ setDoc,
+ serverTimestamp
+} from
+"https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
  apiKey: "AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
@@ -309,6 +247,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 const loginBtn = document.getElementById("loginBtn");
@@ -356,6 +295,46 @@ function showDashboard(){
 }
 
 
+async function saveUserProfile(user){
+
+ const userRef = doc(db,"users",user.uid);
+ const userSnap = await getDoc(userRef);
+
+ const profileData = {
+  uid: user.uid,
+  name: user.displayName || "Player",
+  email: user.email || "",
+  updatedAt: serverTimestamp()
+ };
+
+ if(!userSnap.exists()){
+  profileData.createdAt = serverTimestamp();
+ }
+
+ await setDoc(userRef,profileData,{merge:true});
+
+ const savedProfile = (await getDoc(userRef)).data();
+
+ document.getElementById("profileName").textContent =
+ savedProfile.name || "Player";
+
+ document.getElementById("profileEmail").textContent =
+ savedProfile.email || "Not available";
+
+ document.getElementById("profileUID").textContent =
+ savedProfile.uid || user.uid;
+
+ if(savedProfile.createdAt){
+  const createdDate = savedProfile.createdAt.toDate();
+  document.getElementById("profileCreated").textContent =
+  createdDate.toLocaleDateString();
+ }else{
+  document.getElementById("profileCreated").textContent =
+  "Not available";
+ }
+}
+
+
 function updateLoginUI(user){
 
  currentUser = user;
@@ -365,17 +344,25 @@ function updateLoginUI(user){
 
   authButtons.style.display = "none";
   userArea.style.display = "flex";
-
   userName.textContent = user.displayName || "Player";
 
-  message.textContent = "Welcome! You are logged in.";
+  message.textContent = "Welcome! Loading your profile...";
+
+  saveUserProfile(user).then(()=>{
+   message.textContent = "Welcome! Your profile is saved.";
+  }).catch(error=>{
+   console.error("Profile error:",error);
+   message.textContent =
+   "Profile error: " + error.code;
+  });
 
  }else{
 
   authButtons.style.display = "flex";
   userArea.style.display = "none";
 
-  message.textContent = "Please login with Google to start playing.";
+  message.textContent =
+  "Please login with Google to start playing.";
 
   showHome();
  }
@@ -385,26 +372,19 @@ function updateLoginUI(user){
 async function startAuthentication(){
 
  try{
-
   await setPersistence(auth,browserLocalPersistence);
 
   onAuthStateChanged(auth,user=>{
    updateLoginUI(user);
   },error=>{
-
    authReady = true;
    message.textContent = "Authentication error: " + error.code;
-
    authButtons.style.display = "flex";
   });
 
  }catch(error){
-
   authReady = true;
-
-  message.textContent =
-  "Session error: " + error.code;
-
+  message.textContent = "Session error: " + error.code;
   authButtons.style.display = "flex";
  }
 }
@@ -421,20 +401,14 @@ loginBtn.addEventListener("click",async()=>{
  message.textContent = "Connecting to Google...";
 
  try{
-
   await signInWithPopup(auth,provider);
-
   message.textContent = "Login successful!";
 
  }catch(error){
-
   console.error("Login error:",error);
-
-  message.textContent =
-  "Login error: " + error.code;
+  message.textContent = "Login error: " + error.code;
 
  }finally{
-
   loginBtn.disabled = false;
  }
 });
@@ -443,20 +417,16 @@ loginBtn.addEventListener("click",async()=>{
 logoutBtn.addEventListener("click",async()=>{
 
  try{
-
   await signOut(auth);
   showHome();
 
  }catch(error){
-
-  message.textContent =
-  "Logout error: " + error.message;
+  message.textContent = "Logout error: " + error.message;
  }
 });
 
 
 dashboardBtn.addEventListener("click",showDashboard);
-
 backBtn.addEventListener("click",showHome);
 
 
@@ -465,16 +435,13 @@ document.querySelectorAll(".playBtn").forEach(button=>{
  button.addEventListener("click",()=>{
 
   if(!authReady){
-
    message.textContent = "Checking login. Please wait...";
    return;
   }
 
   if(!currentUser){
-
    message.textContent =
    "Please login with Google before playing.";
-
    return;
   }
 
