@@ -8,164 +8,66 @@
 
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#0b1020;
- color:#fff
-}
-header{
- padding:16px;
- display:flex;
- justify-content:space-between;
- align-items:center;
- background:#111a30;
- border-bottom:1px solid #263653;
- position:sticky;
- top:0;
- z-index:10
-}
+body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
+header{padding:16px;display:flex;justify-content:space-between;align-items:center;background:#111a30;border-bottom:1px solid #263653;position:sticky;top:0;z-index:10}
 .logo{font-size:23px;font-weight:bold;color:#69d5ff}
-button{
- border:0;
- border-radius:9px;
- padding:11px 15px;
- color:#fff;
- background:#2878e8;
- font-weight:bold;
- cursor:pointer
-}
+button{border:0;border-radius:9px;padding:11px 15px;color:#fff;background:#2878e8;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.45;cursor:not-allowed}
 button.secondary{background:#263653}
 button.green{background:#159b70}
 button.red{background:#c44758}
 button.gold{background:#b87917}
 .container{max-width:1000px;margin:auto;padding:18px}
-.panel{
- background:#121d33;
- border:1px solid #263653;
- border-radius:14px;
- padding:18px;
- margin:15px 0
-}
+.panel{background:#121d33;border:1px solid #263653;border-radius:14px;padding:18px;margin:15px 0}
 h1,h2,h3{margin-top:8px}
 .sub{color:#aebbd0;line-height:1.6}
 .hidden{display:none!important}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:14px
-}
-.game-card{
- background:#172641;
- border:1px solid #304566;
- border-radius:13px;
- padding:17px
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.game-card{background:#172641;border:1px solid #304566;border-radius:13px;padding:17px}
 .game-card .emoji{font-size:38px}
-.stat{
- background:#1b2b47;
- padding:12px;
- border-radius:10px;
- flex:1;
- min-width:110px
-}
+.stat{background:#1b2b47;padding:12px;border-radius:10px;flex:1;min-width:110px}
 .stat strong{display:block;font-size:21px;color:#69d5ff}
-input,select{
- background:#0b1426;
- color:white;
- border:1px solid #405575;
- padding:11px;
- border-radius:8px;
- max-width:100%
-}
-.level-grid{
- display:grid;
- grid-template-columns:repeat(5,1fr);
- gap:8px;
- margin-top:15px
-}
+input,select{background:#0b1426;color:white;border:1px solid #405575;padding:11px;border-radius:8px;max-width:100%;width:100%}
+label{display:block;min-width:150px}
+.level-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:15px}
 .level-btn{padding:12px 5px;background:#263653}
 .level-btn.done{background:#137d65}
 .level-btn.current{background:#2878e8}
 .level-btn.locked{background:#202b3e;color:#8290a5}
-#memoryBoard{
- display:grid;
- grid-template-columns:repeat(4,minmax(55px,1fr));
- gap:9px;
- max-width:430px;
- margin:18px auto
-}
-.memory-card{
- min-height:76px;
- border-radius:10px;
- background:#24466d;
- border:2px solid #42658d;
- font-size:28px;
- display:flex;
- justify-content:center;
- align-items:center;
- cursor:pointer;
- user-select:none;
- transition:transform .2s,background .2s
-}
+#memoryBoard{display:grid;grid-template-columns:repeat(4,minmax(55px,1fr));gap:9px;max-width:430px;margin:18px auto}
+.memory-card{min-height:76px;border-radius:10px;background:#24466d;border:2px solid #42658d;font-size:28px;display:flex;justify-content:center;align-items:center;cursor:pointer;user-select:none}
 .memory-card.open,.memory-card.matched{background:#e2efff;color:#14233b}
 .memory-card.matched{background:#8ce0b9}
-#puzzleBoard{
- display:grid;
- grid-template-columns:repeat(3, minmax(65px,95px));
- gap:7px;
- justify-content:center;
- margin:20px auto
-}
-.puzzle-tile{
- height:85px;
- font-size:25px;
- background:#2878e8;
- border-radius:10px
-}
+#puzzleBoard{display:grid;grid-template-columns:repeat(3,minmax(65px,95px));gap:7px;justify-content:center;margin:20px auto}
+.puzzle-tile{height:85px;font-size:25px;background:#2878e8;border-radius:10px}
 .puzzle-tile.empty{background:#0b1426;border:1px dashed #405575}
-#tapArena{
- height:330px;
- max-width:600px;
- margin:15px auto;
- background:linear-gradient(135deg,#142b49,#1d3b50);
- border:2px solid #45617e;
- border-radius:14px;
- position:relative;
- overflow:hidden
-}
-#tapTarget{
- position:absolute;
- width:65px;
- height:65px;
- border-radius:50%;
- padding:0;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:26px;
- box-shadow:0 0 18px #5de5ff;
- transition:left .25s,top .25s
-}
+#tapArena{height:330px;max-width:600px;margin:15px auto;background:linear-gradient(135deg,#142b49,#1d3b50);border:2px solid #45617e;border-radius:14px;position:relative;overflow:hidden}
+#tapTarget{position:absolute;width:65px;height:65px;border-radius:50%;padding:0;display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 0 18px #5de5ff;transition:left .25s,top .25s}
 #tapTarget.bonus{background:#e6a323;box-shadow:0 0 22px #ffdc65}
-.quiz-option{
- display:block;
- width:100%;
- text-align:left;
- margin:9px 0;
- background:#203754
-}
+.quiz-option{display:block;width:100%;text-align:left;margin:9px 0;background:#203754}
 .feedback{padding:12px;border-radius:9px;margin-top:12px}
 .good{background:#155b49}
 .bad{background:#713543}
 footer{text-align:center;color:#8091a9;padding:25px}
+.ad-slot{width:100%;min-height:55px;margin:12px 0;padding:8px;border:1px dashed #405575;border-radius:9px;text-align:center;color:#8293aa;font-size:12px;display:flex;align-items:center;justify-content:center}
+.ad-slot:empty{display:none}
+.ad-placeholder{width:100%;text-align:center;padding:12px;color:#8293aa;background:#101a2c;border-radius:7px}
+.admin-card{background:#172641;border:1px solid #304566;border-radius:12px;padding:14px;margin:12px 0}
+.admin-card input[type="checkbox"]{width:auto;transform:scale(1.2);margin-right:8px}
+.admin-card label{margin:8px 0}
+.modal{position:fixed;inset:0;background:#000c;z-index:1000;display:flex;align-items:center;justify-content:center;padding:18px}
+.modal-content{background:#121d33;border:1px solid #45617e;border-radius:15px;padding:24px;max-width:450px;width:100%;text-align:center}
+.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.small-note{font-size:12px;color:#91a1b8;line-height:1.5}
 @media(max-width:500px){
  .container{padding:12px}
  .level-grid{grid-template-columns:repeat(4,1fr)}
  .memory-card{min-height:65px}
  #tapArena{height:280px}
+ header{padding:10px}
+ .logo{font-size:19px}
+ header button{padding:9px;font-size:12px}
 }
 </style>
 </head>
@@ -176,228 +78,249 @@ footer{text-align:center;color:#8091a9;padding:25px}
  <div class="row">
   <button id="loginBtn">Google Login</button>
   <button id="logoutBtn" class="red hidden">Logout</button>
+  <button class="gold" id="adminButton" onclick="openAdmin()">Admin</button>
  </div>
 </header>
 
 <main class="container">
- <section id="homePage">
-  <div class="panel">
-   <h1>Welcome to GameNova!</h1>
-   <p class="sub">Play games, complete challenges and test your knowledge.</p>
-   <div class="row">
-    <button onclick="showPage('gamesPage')">Explore Games</button>
-    <button class="secondary" onclick="showPage('quizPage')">Quiz Zone</button>
-    <button class="secondary" onclick="showPage('dashboardPage')">Dashboard</button>
-   </div>
-  </div>
 
-  <h2>Featured Games</h2>
-  <div class="grid">
-   <div class="game-card">
-    <div class="emoji">🧠</div>
-    <h3>Memory Match</h3>
-    <p class="sub">Match the pairs and build your combo.</p>
-    <button onclick="openGame('memory')">Play Now</button>
-   </div>
-   <div class="game-card">
-    <div class="emoji">🔢</div>
-    <h3>Number Puzzle</h3>
-    <p class="sub">Arrange the numbers in the correct order.</p>
-    <button onclick="openGame('puzzle')">Play Now</button>
-   </div>
-   <div class="game-card">
-    <div class="emoji">⚡</div>
-    <h3>Quick Tap</h3>
-    <p class="sub">Hit the targets before time runs out.</p>
-    <button onclick="openGame('tap')">Play Now</button>
-   </div>
-  </div>
- </section>
-
- <section id="gamesPage" class="hidden">
+<section id="homePage">
+ <div class="ad-slot" data-slot="home_top"></div>
+ <div class="panel">
+  <h1>Welcome to GameNova!</h1>
+  <p class="sub">Play games, complete challenges and test your knowledge.</p>
   <div class="row">
-   <button class="secondary" onclick="showPage('homePage')">← Home</button>
+   <button onclick="showPage('gamesPage')">Explore Games</button>
+   <button class="secondary" onclick="showPage('quizPage')">Quiz Zone</button>
+   <button class="secondary" onclick="showPage('dashboardPage')">Dashboard</button>
   </div>
-  <h1>Game Zone</h1>
-  <div class="grid">
-   <div class="game-card"><div class="emoji">🧠</div><h3>Memory Match</h3><p class="sub">100 levels</p><button onclick="openGame('memory')">Open</button></div>
-   <div class="game-card"><div class="emoji">🔢</div><h3>Number Puzzle</h3><p class="sub">100 levels</p><button onclick="openGame('puzzle')">Open</button></div>
-   <div class="game-card"><div class="emoji">⚡</div><h3>Quick Tap</h3><p class="sub">100 levels</p><button onclick="openGame('tap')">Open</button></div>
-  </div>
- </section>
+ </div>
+ <h2>Featured Games</h2>
+ <div class="grid">
+  <div class="game-card"><div class="emoji">🧠</div><h3>Memory Match</h3><p class="sub">Match the pairs and build your combo.</p><button onclick="openGame('memory')">Play Now</button></div>
+  <div class="game-card"><div class="emoji">🔢</div><h3>Number Puzzle</h3><p class="sub">Arrange the numbers in the correct order.</p><button onclick="openGame('puzzle')">Play Now</button></div>
+  <div class="game-card"><div class="emoji">⚡</div><h3>Quick Tap</h3><p class="sub">Hit the targets before time runs out.</p><button onclick="openGame('tap')">Play Now</button></div>
+ </div>
+ <div class="ad-slot" data-slot="home_bottom"></div>
+</section>
 
- <section id="dashboardPage" class="hidden">
-  <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
-  <h1>My Dashboard</h1>
-  <div class="panel">
-   <p class="sub">Account Profile</p>
-   <p><b>Name:</b> <span id="profileName">Not logged in</span></p>
-   <p><b>Email:</b> <span id="profileEmail">—</span></p>
-   <p><b>User ID:</b> <span id="profileUid">—</span></p>
-   <p><b>Account Created:</b> <span id="profileCreated">—</span></p>
-  </div>
-  <div class="grid">
-   <div class="stat"><strong>—</strong>Total Points</div>
-   <div class="stat"><strong>—</strong>Leaderboard Rank</div>
-   <div class="stat"><strong>3</strong>Games Available</div>
-  </div>
-  <div class="panel">
-   <h3>Game Progress</h3>
-   <p class="sub" id="dashboardProgress">Your game progress is saved on this device.</p>
-   <button onclick="showPage('gamesPage')">Continue Playing</button>
-  </div>
-  <div class="panel">
-   <h3>More Features</h3>
-   <p class="sub">Quiz History, Notifications, Referral and Leaderboard features are planned for a future update.</p>
-  </div>
- </section>
+<section id="gamesPage" class="hidden">
+ <div class="ad-slot" data-slot="games_top"></div>
+ <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
+ <h1>Game Zone</h1>
+ <div class="grid">
+  <div class="game-card"><div class="emoji">🧠</div><h3>Memory Match</h3><p class="sub">100 levels</p><button onclick="openGame('memory')">Open</button></div>
+  <div class="game-card"><div class="emoji">🔢</div><h3>Number Puzzle</h3><p class="sub">100 levels</p><button onclick="openGame('puzzle')">Open</button></div>
+  <div class="game-card"><div class="emoji">⚡</div><h3>Quick Tap</h3><p class="sub">100 levels</p><button onclick="openGame('tap')">Open</button></div>
+ </div>
+ <div class="ad-slot" data-slot="games_bottom"></div>
+</section>
 
- <section id="quizPage" class="hidden">
-  <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
-  <h1>📝 Quiz Zone</h1>
-  <div class="panel">
+<section id="dashboardPage" class="hidden">
+ <div class="ad-slot" data-slot="dashboard_top"></div>
+ <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
+ <h1>My Dashboard</h1>
+ <div class="panel">
+  <p class="sub">Account Profile</p>
+  <p><b>Name:</b> <span id="profileName">Not logged in</span></p>
+  <p><b>Email:</b> <span id="profileEmail">—</span></p>
+  <p><b>User ID:</b> <span id="profileUid">—</span></p>
+  <p><b>Account Created:</b> <span id="profileCreated">—</span></p>
+ </div>
+ <div class="grid">
+  <div class="stat"><strong>—</strong>Total Points</div>
+  <div class="stat"><strong>—</strong>Leaderboard Rank</div>
+  <div class="stat"><strong>3</strong>Games Available</div>
+ </div>
+ <div class="panel">
+  <h3>Game Progress</h3>
+  <p class="sub" id="dashboardProgress">Your game progress is saved on this device.</p>
+  <button onclick="showPage('gamesPage')">Continue Playing</button>
+ </div>
+ <div class="panel">
+  <h3>More Features</h3>
+  <p class="sub">Quiz History, Notifications, Referral and Leaderboard features are planned for a future update.</p>
+ </div>
+ <div class="ad-slot" data-slot="dashboard_bottom"></div>
+</section>
+
+<section id="quizPage" class="hidden">
+ <div class="ad-slot" data-slot="quiz_top"></div>
+ <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
+ <h1>📝 Quiz Zone</h1>
+ <div class="panel">
+  <div class="row">
+   <label>Language:
+    <select id="quizLanguage"><option value="bn">বাংলা</option><option value="en">English</option></select>
+   </label>
+   <label>Difficulty:
+    <select id="quizDifficulty"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select>
+   </label>
+  </div>
+  <div id="quizSetup">
+   <p class="sub">১০টি প্রশ্নের উত্তর দিয়ে নিজের জ্ঞান যাচাই করো।</p>
+   <button onclick="startQuiz()">Start Quiz</button>
+  </div>
+  <div id="quizPlay" class="hidden">
+   <p id="quizCount" class="sub"></p>
+   <h3 id="quizQuestion"></h3>
+   <div id="quizOptions"></div>
+   <div id="quizFeedback"></div>
    <div class="row">
-    <label>Language:
-     <select id="quizLanguage">
-      <option value="bn">বাংলা</option>
-      <option value="en">English</option>
-     </select>
-    </label>
-    <label>Difficulty:
-     <select id="quizDifficulty">
-      <option value="easy">Easy</option>
-      <option value="medium">Medium</option>
-      <option value="hard">Hard</option>
-     </select>
-    </label>
-   </div>
-   <div id="quizSetup">
-    <p class="sub">১০টি প্রশ্নের উত্তর দিয়ে নিজের জ্ঞান যাচাই করো।</p>
-    <button onclick="startQuiz()">Start Quiz</button>
-   </div>
-   <div id="quizPlay" class="hidden">
-    <p id="quizCount" class="sub"></p>
-    <h3 id="quizQuestion"></h3>
-    <div id="quizOptions"></div>
-    <div id="quizFeedback"></div>
-    <div class="row">
-     <button id="quizNext" onclick="nextQuestion()" disabled>Next</button>
-     <button class="secondary" onclick="skipQuestion()">Skip</button>
-    </div>
-   </div>
-   <div id="quizResult" class="hidden">
-    <h2>Quiz Complete!</h2>
-    <h3 id="quizScore"></h3>
-    <p id="quizMessage" class="sub"></p>
-    <button onclick="startQuiz()">Play Again</button>
+    <button id="quizNext" onclick="nextQuestion()" disabled>Next</button>
+    <button class="secondary" onclick="skipQuestion()">Skip</button>
    </div>
   </div>
- </section>
+  <div id="quizResult" class="hidden">
+   <h2>Quiz Complete!</h2>
+   <h3 id="quizScore"></h3>
+   <p id="quizMessage" class="sub"></p>
+   <button onclick="startQuiz()">Play Again</button>
+  </div>
+ </div>
+ <div class="ad-slot" data-slot="quiz_bottom"></div>
+</section>
 
- <section id="gamePage" class="hidden">
-  <div class="row"><button class="secondary" onclick="backToLevels()">← Back to Levels</button></div>
-  <h1 id="gameTitle">Game</h1>
-  <div class="panel">
-   <div class="row">
-    <div class="stat"><strong id="gameLevel">1</strong>Level</div>
-    <div class="stat"><strong id="gameTimer">0</strong>Time</div>
-    <div class="stat"><strong id="gameMoves">0</strong>Moves / Hits</div>
-   </div>
-   <div id="gameInstructions" class="sub"></div>
-   <div id="memoryArea" class="hidden">
-    <div class="row">
-     <label>Theme:
-      <select id="memoryTheme" onchange="changeMemoryTheme()">
-       <option value="animals">Animals</option>
-       <option value="nature">Nature</option>
-       <option value="space">Space</option>
-       <option value="food">Food</option>
-      </select>
-     </label>
-    </div>
-    <p id="memoryCombo" class="sub">Combo: 0</p>
-    <div id="memoryBoard"></div>
-   </div>
-   <div id="puzzleArea" class="hidden">
-    <div id="puzzleBoard"></div>
-   </div>
-   <div id="tapArea" class="hidden">
-    <div class="row">
-     <div class="stat"><strong id="tapHits">0</strong>Hits</div>
-     <div class="stat"><strong id="tapGoal">5</strong>Target Hits</div>
-     <div class="stat"><strong id="tapBonus">0</strong>Bonus Hits</div>
-    </div>
-    <div id="tapArena">
-     <button id="tapTarget" onclick="hitTarget()">🎯</button>
-    </div>
-   </div>
-   <div id="gameMessage" class="feedback hidden"></div>
-   <div class="row" style="margin-top:15px">
-    <button id="restartGame" onclick="startCurrentGame()">Restart Level</button>
-    <button class="secondary" onclick="backToLevels()">Level List</button>
-   </div>
+<section id="gamePage" class="hidden">
+ <div class="ad-slot" data-slot="game_top"></div>
+ <div class="row"><button class="secondary" onclick="backToLevels()">← Back to Levels</button></div>
+ <h1 id="gameTitle">Game</h1>
+ <div class="panel">
+  <div class="row">
+   <div class="stat"><strong id="gameLevel">1</strong>Level</div>
+   <div class="stat"><strong id="gameTimer">0</strong>Time</div>
+   <div class="stat"><strong id="gameMoves">0</strong>Moves / Hits</div>
   </div>
- </section>
+  <div id="gameInstructions" class="sub"></div>
+  <div id="memoryArea" class="hidden">
+   <div class="row"><label>Theme:
+    <select id="memoryTheme" onchange="changeMemoryTheme()">
+     <option value="animals">Animals</option><option value="nature">Nature</option><option value="space">Space</option><option value="food">Food</option>
+    </select>
+   </label></div>
+   <p id="memoryCombo" class="sub">Combo: 0</p>
+   <div id="memoryBoard"></div>
+  </div>
+  <div id="puzzleArea" class="hidden"><div id="puzzleBoard"></div></div>
+  <div id="tapArea" class="hidden">
+   <div class="row">
+    <div class="stat"><strong id="tapHits">0</strong>Hits</div>
+    <div class="stat"><strong id="tapGoal">5</strong>Target Hits</div>
+    <div class="stat"><strong id="tapBonus">0</strong>Bonus Hits</div>
+   </div>
+   <div id="tapArena"><button id="tapTarget" onclick="hitTarget()">🎯</button></div>
+  </div>
+  <div id="gameMessage" class="feedback hidden"></div>
+  <div class="row" style="margin-top:15px">
+   <button id="restartGame" onclick="startCurrentGame()">Restart Level</button>
+   <button class="secondary" onclick="backToLevels()">Level List</button>
+  </div>
+ </div>
+ <div class="ad-slot" data-slot="game_bottom"></div>
+</section>
 
- <section id="levelsPage" class="hidden">
-  <div class="row"><button class="secondary" onclick="showPage('gamesPage')">← Games</button></div>
-  <h1 id="levelsTitle">Choose a Level</h1>
-  <p class="sub" id="levelsInfo">Complete a level to unlock the next one.</p>
-  <div class="panel">
-   <div class="row">
-    <div class="stat"><strong id="unlockedCount">1</strong>Unlocked</div>
-    <div class="stat"><strong id="completedCount">0</strong>Completed</div>
-   </div>
-   <div id="levelGrid" class="level-grid"></div>
+<section id="levelsPage" class="hidden">
+ <div class="ad-slot" data-slot="levels_top"></div>
+ <div class="row"><button class="secondary" onclick="showPage('gamesPage')">← Games</button></div>
+ <h1 id="levelsTitle">Choose a Level</h1>
+ <p class="sub" id="levelsInfo">Complete a level to unlock the next one.</p>
+ <div class="panel">
+  <div class="row">
+   <div class="stat"><strong id="unlockedCount">1</strong>Unlocked</div>
+   <div class="stat"><strong id="completedCount">0</strong>Completed</div>
   </div>
- </section>
+  <div id="levelGrid" class="level-grid"></div>
+ </div>
+ <div class="ad-slot" data-slot="levels_bottom"></div>
+</section>
+
+<section id="adminLoginPage" class="hidden">
+ <div class="row"><button class="secondary" onclick="showPage('homePage')">← Home</button></div>
+ <div class="panel">
+  <h1>🔐 Admin Login</h1>
+  <p class="sub">শুধু Admin Password দিয়ে প্রবেশ করো।</p>
+  <input id="adminPassword" type="password" placeholder="Admin Password" autocomplete="current-password">
+  <button class="gold" style="width:100%;margin-top:12px" onclick="adminLogin()">Login to Admin Panel</button>
+  <p id="adminLoginMessage" class="sub"></p>
+ </div>
+</section>
+
+<section id="adminPage" class="hidden">
+ <h1>⚙️ GameNova Admin Panel</h1>
+ <div class="panel">
+  <div class="row">
+   <h3 style="flex:1">Advertisement Settings</h3>
+   <button class="red" onclick="adminLogout()">Admin Logout</button>
+  </div>
+  <label><input type="checkbox" id="globalAdsEnabled"> Enable all advertisements</label>
+  <p class="small-note">এই সুইচ বন্ধ করলে সব Banner Ad Slot বন্ধ থাকবে।</p>
+  <button class="green" onclick="saveAdSettings()">Save All Settings</button>
+  <p id="adminSaveMessage" class="sub"></p>
+ </div>
+ <h2>Banner Ad Slots</h2>
+ <p class="sub">প্রতিটি পেজের উপরে ও নিচে আলাদা বিজ্ঞাপনের সেটিংস।</p>
+ <div id="adminAdSlots" class="admin-grid"></div>
+ <div class="panel">
+  <h3>Important: Monetag Integration</h3>
+  <p class="small-note">এখানে Ad ID সংরক্ষণ করা যাবে। কিন্তু শুধু ID দিলেই বিজ্ঞাপন দেখাবে না। আসল বিজ্ঞাপন চালু করতে Monetag-এর অফিসিয়াল Ad Tag/কোড যুক্ত করতে হবে। এখনো কোনো বাস্তব বিজ্ঞাপন কোড যুক্ত করা হয়নি।</p>
+ </div>
+</section>
+
 </main>
+
+<div id="adModal" class="modal hidden">
+ <div class="modal-content">
+  <h2>Advertisement</h2>
+  <p id="adModalText" class="sub">Advertisement slot preview</p>
+  <div id="adCountdown" style="font-size:28px;color:#69d5ff;margin:18px">15</div>
+  <button id="adSkipButton" disabled onclick="skipAdGate()">Please wait...</button>
+  <p class="small-note">Monetag-এর অফিসিয়াল বিজ্ঞাপন কোড যুক্ত না হওয়া পর্যন্ত এটি শুধু পরীক্ষামূলক স্ক্রিন।</p>
+ </div>
+</div>
 
 <footer>GameNova © 2026</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import {initializeApp} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 import {
- getAuth, GoogleAuthProvider, signInWithPopup, signOut,
- onAuthStateChanged, setPersistence, browserLocalPersistence
+ getAuth,GoogleAuthProvider,signInWithPopup,signOut,onAuthStateChanged,
+ setPersistence,browserLocalPersistence,signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 import {
- getFirestore, doc, getDoc, setDoc, serverTimestamp
+ getFirestore,doc,getDoc,setDoc,serverTimestamp
 } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
-const firebaseConfig = {
- apiKey: "AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
- authDomain: "gamenova-9a784.firebaseapp.com",
- projectId: "gamenova-9a784",
- storageBucket: "gamenova-9a784.firebasestorage.app",
- messagingSenderId: "515993651839",
- appId: "1:515993651839:web:4cfee979840f4248120d4a",
- measurementId: "G-FBSQYQ8RNY"
+const firebaseConfig={
+ apiKey:"AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
+ authDomain:"gamenova-9a784.firebaseapp.com",
+ projectId:"gamenova-9a784",
+ storageBucket:"gamenova-9a784.firebasestorage.app",
+ messagingSenderId:"515993651839",
+ appId:"1:515993651839:web:4cfee979840f4248120d4a",
+ measurementId:"G-FBSQYQ8RNY"
 };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const provider = new GoogleAuthProvider();
+const ADMIN_UID="TfBr1g4xmjS9Y8geKfnNEfmlNh82";
+const ADMIN_EMAIL="kmd889915@gmail.com";
 
-try { await setPersistence(auth,browserLocalPersistence); } catch(e) {
- console.log("Persistence setting:",e);
-}
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getFirestore(app);
+const provider=new GoogleAuthProvider();
+
+try{await setPersistence(auth,browserLocalPersistence)}catch(e){console.log(e)}
 
 const loginBtn=document.getElementById("loginBtn");
 const logoutBtn=document.getElementById("logoutBtn");
 
 loginBtn.addEventListener("click",async()=>{
- try{
-  await signInWithPopup(auth,provider);
- }catch(error){
-  alert("Login failed: "+error.message);
- }
+ try{await signInWithPopup(auth,provider)}
+ catch(error){alert("Login failed: "+error.message)}
 });
 
 logoutBtn.addEventListener("click",async()=>{
- try{await signOut(auth);}
- catch(error){alert("Logout failed: "+error.message);}
+ try{await signOut(auth)}
+ catch(error){alert("Logout failed: "+error.message)}
 });
 
 onAuthStateChanged(auth,async user=>{
@@ -407,6 +330,13 @@ onAuthStateChanged(auth,async user=>{
   document.getElementById("profileName").textContent=user.displayName||"User";
   document.getElementById("profileEmail").textContent=user.email||"—";
   document.getElementById("profileUid").textContent=user.uid;
+
+  if(user.uid===ADMIN_UID){
+   document.getElementById("profileName").textContent="Administrator";
+   document.getElementById("profileEmail").textContent=user.email||"—";
+   return;
+  }
+
   try{
    const userRef=doc(db,"users",user.uid);
    const snap=await getDoc(userRef);
@@ -422,12 +352,9 @@ onAuthStateChanged(auth,async user=>{
    const updated=await getDoc(userRef);
    const data=updated.data();
    if(data?.createdAt?.toDate){
-    document.getElementById("profileCreated").textContent=
-      data.createdAt.toDate().toLocaleDateString();
+    document.getElementById("profileCreated").textContent=data.createdAt.toDate().toLocaleDateString();
    }
-  }catch(error){
-   console.error("Profile sync error:",error);
-  }
+  }catch(error){console.error("Profile sync error:",error)}
  }else{
   loginBtn.classList.remove("hidden");
   logoutBtn.classList.add("hidden");
@@ -437,11 +364,181 @@ onAuthStateChanged(auth,async user=>{
   document.getElementById("profileCreated").textContent="—";
  }
 });
+
+/* ---------------- ADMIN PANEL ---------------- */
+const slotNames=[
+ ["home_top","Home Page - Top"],["home_bottom","Home Page - Bottom"],
+ ["games_top","Games Page - Top"],["games_bottom","Games Page - Bottom"],
+ ["dashboard_top","Dashboard - Top"],["dashboard_bottom","Dashboard - Bottom"],
+ ["quiz_top","Quiz Page - Top"],["quiz_bottom","Quiz Page - Bottom"],
+ ["game_top","Game Page - Top"],["game_bottom","Game Page - Bottom"],
+ ["levels_top","Levels Page - Top"],["levels_bottom","Levels Page - Bottom"]
+];
+
+let globalAdsEnabled=true;
+let adSettings={};
+
+window.openAdmin=async function(){
+ const user=auth.currentUser;
+ if(user&&user.uid===ADMIN_UID){
+  showPage("adminPage");
+  await loadAdminSettings();
+ }else{
+  document.getElementById("adminPassword").value="";
+  document.getElementById("adminLoginMessage").textContent="";
+  showPage("adminLoginPage");
+ }
+};
+
+window.adminLogin=async function(){
+ const password=document.getElementById("adminPassword").value;
+ const message=document.getElementById("adminLoginMessage");
+
+ if(!password){message.textContent="Password লিখো।";return}
+
+ try{
+  const result=await signInWithEmailAndPassword(auth,ADMIN_EMAIL,password);
+  if(result.user.uid!==ADMIN_UID){
+   await signOut(auth);
+   message.textContent="এই Account-এর Admin access নেই।";
+   return;
+  }
+  document.getElementById("adminPassword").value="";
+  showPage("adminPage");
+  await loadAdminSettings();
+ }catch(error){
+  message.textContent="Login হয়নি। Password অথবা Admin account পরীক্ষা করো।";
+ }
+};
+
+window.adminLogout=async function(){
+ try{
+  await signOut(auth);
+  showPage("homePage");
+ }catch(error){alert("Logout failed: "+error.message)}
+};
+
+async function loadAdminSettings(){
+ if(!auth.currentUser||auth.currentUser.uid!==ADMIN_UID){
+  showPage("adminLoginPage");return;
+ }
+ try{
+  const configSnap=await getDoc(doc(db,"adSlots","config"));
+  globalAdsEnabled=configSnap.exists()?configSnap.data().globalEnabled!==false:true;
+  document.getElementById("globalAdsEnabled").checked=globalAdsEnabled;
+
+  const container=document.getElementById("adminAdSlots");
+  container.innerHTML="";
+  adSettings={};
+
+  for(const [id,title] of slotNames){
+   const snap=await getDoc(doc(db,"adSlots",id));
+   const data=snap.exists()?snap.data():{};
+   adSettings[id]={
+    enabled:data.enabled===true,
+    adUnitId:typeof data.adUnitId==="string"?data.adUnitId:""
+   };
+
+   const card=document.createElement("div");
+   card.className="admin-card";
+
+   const heading=document.createElement("h3");
+   heading.textContent=title;
+   card.appendChild(heading);
+
+   const label=document.createElement("label");
+   const checkbox=document.createElement("input");
+   checkbox.type="checkbox";
+   checkbox.checked=adSettings[id].enabled;
+   checkbox.dataset.slot=id;
+   checkbox.className="slot-enabled";
+   label.appendChild(checkbox);
+   label.appendChild(document.createTextNode("Enable this ad slot"));
+   card.appendChild(label);
+
+   const idLabel=document.createElement("label");
+   idLabel.textContent="Monetag Ad ID";
+   const input=document.createElement("input");
+   input.type="text";
+   input.placeholder="Enter Ad ID";
+   input.value=adSettings[id].adUnitId;
+   input.dataset.slot=id;
+   input.className="slot-ad-id";
+   idLabel.appendChild(input);
+   card.appendChild(idLabel);
+
+   container.appendChild(card);
+  }
+  document.getElementById("adminSaveMessage").textContent="Settings loaded.";
+ }catch(error){
+  document.getElementById("adminSaveMessage").textContent="Settings load হয়নি: "+error.message;
+ }
+}
+
+window.saveAdSettings=async function(){
+ if(!auth.currentUser||auth.currentUser.uid!==ADMIN_UID){
+  alert("Admin access required.");return;
+ }
+ const message=document.getElementById("adminSaveMessage");
+ message.textContent="Saving...";
+
+ try{
+  const globalEnabled=document.getElementById("globalAdsEnabled").checked;
+  await setDoc(doc(db,"adSlots","config"),{
+   globalEnabled:globalEnabled,
+   updatedAt:serverTimestamp()
+  });
+
+  const checks=document.querySelectorAll(".slot-enabled");
+  const inputs=document.querySelectorAll(".slot-ad-id");
+
+  for(const [id] of slotNames){
+   const check=[...checks].find(x=>x.dataset.slot===id);
+   const input=[...inputs].find(x=>x.dataset.slot===id);
+   await setDoc(doc(db,"adSlots",id),{
+    enabled:check?check.checked:false,
+    adUnitId:input?input.value.trim():"",
+    network:"monetag",
+    updatedAt:serverTimestamp()
+   });
+  }
+
+  message.textContent="সব Ad Settings সফলভাবে Save হয়েছে।";
+  await loadBannerAds();
+ }catch(error){
+  message.textContent="Save হয়নি: "+error.message;
+ }
+};
+
+async function loadBannerAds(){
+ try{
+  const configSnap=await getDoc(doc(db,"adSlots","config"));
+  const enabled=configSnap.exists()?configSnap.data().globalEnabled!==false:true;
+
+  document.querySelectorAll(".ad-slot").forEach(async element=>{
+   const slot=element.dataset.slot;
+   if(!enabled){element.innerHTML="";return}
+   const snap=await getDoc(doc(db,"adSlots",slot));
+   if(!snap.exists()){element.innerHTML="";return}
+   const data=snap.data();
+   if(data.enabled!==true){element.innerHTML="";return}
+
+   element.textContent="";
+   const placeholder=document.createElement("div");
+   placeholder.className="ad-placeholder";
+   placeholder.textContent=data.adUnitId?
+    "Advertisement slot configured — Monetag tag integration pending":
+    "Advertisement area — Ad ID not added";
+   element.appendChild(placeholder);
+  });
+ }catch(error){console.log("Ad settings could not load:",error)}
+}
+loadBannerAds();
 </script>
 
 <script>
 /* ---------------- PAGE NAVIGATION ---------------- */
-const pageIds=["homePage","gamesPage","dashboardPage","quizPage","gamePage","levelsPage"];
+const pageIds=["homePage","gamesPage","dashboardPage","quizPage","gamePage","levelsPage","adminLoginPage","adminPage"];
 function showPage(id){
  pageIds.forEach(p=>document.getElementById(p).classList.add("hidden"));
  document.getElementById(id).classList.remove("hidden");
@@ -452,11 +549,7 @@ window.showPage=showPage;
 /* ---------------- LOCAL GAME PROGRESS ---------------- */
 const SAVE_KEY="gamenova_game_progress_v2";
 function freshProgress(){
- return {
-  memory:{unlocked:1,completed:[]},
-  puzzle:{unlocked:1,completed:[]},
-  tap:{unlocked:1,completed:[]}
- };
+ return {memory:{unlocked:1,completed:[]},puzzle:{unlocked:1,completed:[]},tap:{unlocked:1,completed:[]}};
 }
 function loadProgress(){
  try{
@@ -466,96 +559,70 @@ function loadProgress(){
   ["memory","puzzle","tap"].forEach(k=>{
    if(saved[k]){
     base[k].unlocked=Math.max(1,Math.min(100,Number(saved[k].unlocked)||1));
-    base[k].completed=Array.isArray(saved[k].completed)?
-      saved[k].completed.filter(n=>Number.isInteger(n)&&n>=1&&n<=100):[];
+    base[k].completed=Array.isArray(saved[k].completed)?saved[k].completed.filter(n=>Number.isInteger(n)&&n>=1&&n<=100):[];
    }
   });
   return base;
- }catch(e){return freshProgress();}
+ }catch(e){return freshProgress()}
 }
 let progress=loadProgress();
 function saveProgress(){
- try{localStorage.setItem(SAVE_KEY,JSON.stringify(progress));}
- catch(e){console.warn("Could not save game progress",e);}
+ try{localStorage.setItem(SAVE_KEY,JSON.stringify(progress))}
+ catch(e){console.warn("Could not save game progress",e)}
 }
 function updateDashboardProgress(){
  document.getElementById("dashboardProgress").textContent=
-  `Memory: ${progress.memory.completed.length}/100 | Puzzle: ${progress.puzzle.completed.length}/100 | Quick Tap: ${progress.tap.completed.length}/100 completed.`;
+ `Memory: ${progress.memory.completed.length}/100 | Puzzle: ${progress.puzzle.completed.length}/100 | Quick Tap: ${progress.tap.completed.length}/100 completed.`;
 }
 updateDashboardProgress();
 
-const gameNames={
- memory:"🧠 Memory Match",
- puzzle:"🔢 Number Puzzle",
- tap:"⚡ Quick Tap Challenge"
-};
-let currentGame="memory";
-let currentLevel=1;
-let gameTimerInterval=null;
-let gameMoveCount=0;
-let gameSeconds=0;
-let gameRunning=false;
-let gameTimeouts=[];
+const gameNames={memory:"🧠 Memory Match",puzzle:"🔢 Number Puzzle",tap:"⚡ Quick Tap Challenge"};
+let currentGame="memory",currentLevel=1;
+let gameTimerInterval=null,gameMoveCount=0,gameSeconds=0,gameRunning=false;
+let gameTimeouts=[],gameIntervals=[];
+
 function clearGameTimers(){
- if(gameTimerInterval){clearInterval(gameTimerInterval);gameTimerInterval=null;}
- gameTimeouts.forEach(t=>clearTimeout(t));
- gameTimeouts=[];
+ if(gameTimerInterval){clearInterval(gameTimerInterval);gameTimerInterval=null}
+ gameTimeouts.forEach(clearTimeout);gameTimeouts=[];
+ gameIntervals.forEach(clearInterval);gameIntervals=[];
  gameRunning=false;
 }
 function addTimeout(fn,delay){
- const t=setTimeout(fn,delay);
- gameTimeouts.push(t);
- return t;
+ const t=setTimeout(fn,delay);gameTimeouts.push(t);return t;
 }
 function startClock(){
  gameSeconds=0;
  document.getElementById("gameTimer").textContent="0";
  if(gameTimerInterval)clearInterval(gameTimerInterval);
  gameTimerInterval=setInterval(()=>{
-  if(!gameRunning)return;
-  gameSeconds++;
-  document.getElementById("gameTimer").textContent=gameSeconds;
+  if(gameRunning){gameSeconds++;document.getElementById("gameTimer").textContent=gameSeconds}
  },1000);
 }
 function setMoves(n){
- gameMoveCount=n;
- document.getElementById("gameMoves").textContent=n;
+ gameMoveCount=n;document.getElementById("gameMoves").textContent=n;
 }
 function showGameMessage(message,type="good"){
  const el=document.getElementById("gameMessage");
- el.textContent=message;
- el.className="feedback "+type;
- el.classList.remove("hidden");
+ el.textContent=message;el.className="feedback "+type;el.classList.remove("hidden");
 }
-function hideGameMessage(){
- document.getElementById("gameMessage").classList.add("hidden");
-}
-function openGame(game){
- currentGame=game;
- showLevels();
-}
+function hideGameMessage(){document.getElementById("gameMessage").classList.add("hidden")}
+function openGame(game){currentGame=game;showLevels()}
 window.openGame=openGame;
 
 function showLevels(){
- clearGameTimers();
- showPage("levelsPage");
+ clearGameTimers();showPage("levelsPage");
  document.getElementById("levelsTitle").textContent=gameNames[currentGame]+" — Levels";
  const p=progress[currentGame];
  document.getElementById("unlockedCount").textContent=p.unlocked;
  document.getElementById("completedCount").textContent=p.completed.length;
- document.getElementById("levelsInfo").textContent=
-  `Level 1 থেকে শুরু করো। একটি লেভেল শেষ করলে পরের লেভেল খুলবে।`;
- const grid=document.getElementById("levelGrid");
- grid.innerHTML="";
+ document.getElementById("levelsInfo").textContent="Level 1 থেকে শুরু করো। একটি লেভেল শেষ করলে পরের লেভেল খুলবে।";
+ const grid=document.getElementById("levelGrid");grid.innerHTML="";
  for(let i=1;i<=100;i++){
   const btn=document.createElement("button");
   btn.textContent=p.completed.includes(i)?"✓ "+i:i;
   btn.className="level-btn";
-  if(i>p.unlocked){
-   btn.classList.add("locked");
-   btn.textContent="🔒";
-   btn.disabled=true;
-  }else{
+  if(i>p.unlocked){btn.classList.add("locked");btn.textContent="🔒";btn.disabled=true}
+  else{
    if(p.completed.includes(i))btn.classList.add("done");
    else if(i===p.unlocked)btn.classList.add("current");
    btn.addEventListener("click",()=>startLevel(i));
@@ -567,23 +634,46 @@ function showLevels(){
 window.backToLevels=showLevels;
 
 function startLevel(level){
- currentLevel=level;
- clearGameTimers();
- showPage("gamePage");
- hideGameMessage();
+ currentLevel=level;clearGameTimers();showPage("gamePage");hideGameMessage();
  document.getElementById("gameTitle").textContent=gameNames[currentGame];
  document.getElementById("gameLevel").textContent=level;
- document.getElementById("memoryArea").classList.add("hidden");
- document.getElementById("puzzleArea").classList.add("hidden");
- document.getElementById("tapArea").classList.add("hidden");
- setMoves(0);
- document.getElementById("gameTimer").textContent="0";
+ ["memoryArea","puzzleArea","tapArea"].forEach(id=>document.getElementById(id).classList.add("hidden"));
+ setMoves(0);document.getElementById("gameTimer").textContent="0";
  if(currentGame==="memory")startMemory();
  if(currentGame==="puzzle")startPuzzle();
  if(currentGame==="tap")startTap();
 }
-function startCurrentGame(){startLevel(currentLevel);}
+function startCurrentGame(){startLevel(currentLevel)}
 window.startCurrentGame=startCurrentGame;
+
+/* ---------------- AD GATE PREVIEW ---------------- */
+let adGateTimer=null,adGateCallback=null,adGateRemaining=15;
+function showAdGate(callback){
+ adGateCallback=callback;
+ adGateRemaining=15;
+ document.getElementById("adModalText").textContent=
+ "Monetag-এর আসল Ad Tag এখনো যুক্ত হয়নি। এটি বিজ্ঞাপন বিরতির পরীক্ষামূলক Preview।";
+ document.getElementById("adCountdown").textContent="15";
+ const button=document.getElementById("adSkipButton");
+ button.disabled=true;button.textContent="Please wait...";
+ document.getElementById("adModal").classList.remove("hidden");
+ if(adGateTimer)clearInterval(adGateTimer);
+ adGateTimer=setInterval(()=>{
+  adGateRemaining--;
+  document.getElementById("adCountdown").textContent=adGateRemaining;
+  if(adGateRemaining<=0){
+   clearInterval(adGateTimer);adGateTimer=null;
+   button.disabled=false;button.textContent="Continue";
+  }
+ },1000);
+}
+window.skipAdGate=function(){
+ if(adGateRemaining>0)return;
+ if(adGateTimer){clearInterval(adGateTimer);adGateTimer=null}
+ document.getElementById("adModal").classList.add("hidden");
+ const callback=adGateCallback;adGateCallback=null;
+ if(typeof callback==="function")callback();
+};
 
 function completeLevel(message){
  if(!gameRunning)return;
@@ -591,23 +681,22 @@ function completeLevel(message){
  const p=progress[currentGame];
  if(!p.completed.includes(currentLevel))p.completed.push(currentLevel);
  if(currentLevel<100)p.unlocked=Math.max(p.unlocked,currentLevel+1);
- saveProgress();
- updateDashboardProgress();
+ saveProgress();updateDashboardProgress();
  showGameMessage(message+" Next level unlocked!","good");
  const next=document.createElement("button");
  next.textContent=currentLevel===100?"All 100 Levels Completed!":"Play Next Level";
  next.style.marginTop="12px";
  next.onclick=()=>{
-  if(currentLevel<100)startLevel(currentLevel+1);
-  else showLevels();
+  if(currentLevel<100){
+   showAdGate(()=>startLevel(currentLevel+1));
+  }else showLevels();
  };
  document.getElementById("gameMessage").appendChild(document.createElement("br"));
  document.getElementById("gameMessage").appendChild(next);
 }
 function failLevel(message){
  if(!gameRunning)return;
- clearGameTimers();
- showGameMessage(message+" Try this level again.","bad");
+ clearGameTimers();showGameMessage(message+" Try this level again.","bad");
 }
 
 /* ---------------- MEMORY MATCH ---------------- */
@@ -617,13 +706,8 @@ const memoryThemes={
  space:["🚀","🪐","🌎","🌕","☄️","👽","🛰️","🌟","🌌","🛸","🌞","🌠"],
  food:["🍎","🍕","🍔","🍇","🍉","🍩","🍓","🥑","🍟","🍒","🥕","🍪"]
 };
-let memoryCards=[];
-let memoryOpen=[];
-let memoryMatched=0;
-let memoryCombo=0;
-let memoryBestCombo=0;
-let memoryTheme="animals";
-let memoryLock=false;
+let memoryCards=[],memoryOpen=[],memoryMatched=0,memoryCombo=0,memoryBestCombo=0;
+let memoryTheme="animals",memoryLock=false;
 function changeMemoryTheme(){
  memoryTheme=document.getElementById("memoryTheme").value;
  if(currentGame==="memory"&&gameRunning)startMemory();
@@ -632,65 +716,41 @@ window.changeMemoryTheme=changeMemoryTheme;
 
 function startMemory(){
  document.getElementById("memoryArea").classList.remove("hidden");
- document.getElementById("gameInstructions").textContent=
-  "একই ছবি থাকা দুটি কার্ড খুঁজে বের করো। দ্রুত জোড়া মেলালে Combo বাড়বে।";
- const pairCount=Math.min(12,Math.min(4+Math.floor((currentLevel-1)/10),12));
+ document.getElementById("gameInstructions").textContent="একই ছবি থাকা দুটি কার্ড খুঁজে বের করো। দ্রুত জোড়া মেলালে Combo বাড়বে।";
+ const pairCount=Math.min(12,4+Math.floor((currentLevel-1)/10));
  const symbols=memoryThemes[memoryTheme].slice(0,pairCount);
  memoryCards=[...symbols,...symbols].sort(()=>Math.random()-.5);
- memoryOpen=[];
- memoryMatched=0;
- memoryCombo=0;
- memoryBestCombo=0;
- memoryLock=false;
+ memoryOpen=[];memoryMatched=0;memoryCombo=0;memoryBestCombo=0;memoryLock=false;
  document.getElementById("memoryCombo").textContent="Combo: 0 | Best: 0";
- const board=document.getElementById("memoryBoard");
- board.style.gridTemplateColumns=pairCount>8?"repeat(4,minmax(55px,1fr))":"repeat(4,minmax(55px,1fr))";
- board.innerHTML="";
+ const board=document.getElementById("memoryBoard");board.innerHTML="";
+ board.style.gridTemplateColumns="repeat(4,minmax(55px,1fr))";
  memoryCards.forEach((symbol,index)=>{
   const card=document.createElement("button");
-  card.className="memory-card";
-  card.textContent="?";
-  card.dataset.index=index;
-  card.addEventListener("click",()=>flipMemoryCard(index,card));
-  board.appendChild(card);
+  card.className="memory-card";card.textContent="?";card.dataset.index=index;
+  card.addEventListener("click",()=>flipMemoryCard(index,card));board.appendChild(card);
  });
- gameRunning=true;
- startClock();
+ gameRunning=true;startClock();
 }
 function flipMemoryCard(index,card){
  if(!gameRunning||memoryLock||memoryOpen.includes(index)||card.classList.contains("matched"))return;
- card.textContent=memoryCards[index];
- card.classList.add("open");
- memoryOpen.push(index);
+ card.textContent=memoryCards[index];card.classList.add("open");memoryOpen.push(index);
  setMoves(gameMoveCount+1);
  if(memoryOpen.length===2){
-  const [a,b]=memoryOpen;
-  const cards=document.querySelectorAll(".memory-card");
+  const [a,b]=memoryOpen,cards=document.querySelectorAll(".memory-card");
   if(memoryCards[a]===memoryCards[b]){
-   cards[a].classList.remove("open");
-   cards[b].classList.remove("open");
-   cards[a].classList.add("matched");
-   cards[b].classList.add("matched");
-   memoryMatched++;
-   memoryCombo++;
-   memoryBestCombo=Math.max(memoryBestCombo,memoryCombo);
-   document.getElementById("memoryCombo").textContent=
-    "Combo: "+memoryCombo+" | Best: "+memoryBestCombo;
+   cards[a].classList.remove("open");cards[b].classList.remove("open");
+   cards[a].classList.add("matched");cards[b].classList.add("matched");
+   memoryMatched++;memoryCombo++;memoryBestCombo=Math.max(memoryBestCombo,memoryCombo);
+   document.getElementById("memoryCombo").textContent="Combo: "+memoryCombo+" | Best: "+memoryBestCombo;
    memoryOpen=[];
-   if(memoryMatched===memoryCards.length/2){
-    completeLevel("Excellent! All pairs matched in "+gameSeconds+" seconds.");
-   }
+   if(memoryMatched===memoryCards.length/2)completeLevel("Excellent! All pairs matched in "+gameSeconds+" seconds.");
   }else{
-   memoryCombo=0;
-   document.getElementById("memoryCombo").textContent="Combo: 0 | Best: "+memoryBestCombo;
+   memoryCombo=0;document.getElementById("memoryCombo").textContent="Combo: 0 | Best: "+memoryBestCombo;
    memoryLock=true;
    addTimeout(()=>{
-    cards[a].textContent="?";
-    cards[b].textContent="?";
-    cards[a].classList.remove("open");
-    cards[b].classList.remove("open");
-    memoryOpen=[];
-    memoryLock=false;
+    cards[a].textContent="?";cards[b].textContent="?";
+    cards[a].classList.remove("open");cards[b].classList.remove("open");
+    memoryOpen=[];memoryLock=false;
    },750);
   }
  }
@@ -698,26 +758,20 @@ function flipMemoryCard(index,card){
 
 /* ---------------- NUMBER PUZZLE ---------------- */
 let puzzleBoard=[];
-function puzzleSolved(){
- return puzzleBoard.every((v,i)=>v===(i===8?0:i+1));
-}
+function puzzleSolved(){return puzzleBoard.every((v,i)=>v===(i===8?0:i+1))}
 function renderPuzzle(){
- const board=document.getElementById("puzzleBoard");
- board.innerHTML="";
+ const board=document.getElementById("puzzleBoard");board.innerHTML="";
  puzzleBoard.forEach((value,index)=>{
   const btn=document.createElement("button");
   btn.className="puzzle-tile"+(value===0?" empty":"");
   btn.textContent=value===0?"":value;
-  btn.addEventListener("click",()=>movePuzzle(index));
-  board.appendChild(btn);
+  btn.addEventListener("click",()=>movePuzzle(index));board.appendChild(btn);
  });
 }
 function shufflePuzzle(steps){
- puzzleBoard=[1,2,3,4,5,6,7,8,0];
- let previous=-1;
+ puzzleBoard=[1,2,3,4,5,6,7,8,0];let previous=-1;
  for(let i=0;i<steps;i++){
-  const empty=puzzleBoard.indexOf(0);
-  const options=[];
+  const empty=puzzleBoard.indexOf(0),options=[];
   if(empty%3>0)options.push(empty-1);
   if(empty%3<2)options.push(empty+1);
   if(empty>=3)options.push(empty-3);
@@ -732,37 +786,26 @@ function shufflePuzzle(steps){
 }
 function startPuzzle(){
  document.getElementById("puzzleArea").classList.remove("hidden");
- document.getElementById("gameInstructions").textContent=
-  "খালি ঘরের পাশে থাকা সংখ্যা সরিয়ে ১ থেকে ৮ পর্যন্ত সঠিক ক্রমে সাজাও।";
- const shuffleSteps=Math.min(12+currentLevel*3,310);
- shufflePuzzle(shuffleSteps);
- renderPuzzle();
- gameRunning=true;
- startClock();
+ document.getElementById("gameInstructions").textContent="খালি ঘরের পাশে থাকা সংখ্যা সরিয়ে ১ থেকে ৮ পর্যন্ত সঠিক ক্রমে সাজাও।";
+ shufflePuzzle(Math.min(12+currentLevel*3,310));renderPuzzle();
+ gameRunning=true;startClock();
 }
 function movePuzzle(index){
  if(!gameRunning||puzzleBoard[index]===0)return;
  const empty=puzzleBoard.indexOf(0);
- const adjacent=(Math.abs(index-empty)===3)||
-  (Math.floor(index/3)===Math.floor(empty/3)&&Math.abs(index-empty)===1);
+ const adjacent=Math.abs(index-empty)===3||
+ (Math.floor(index/3)===Math.floor(empty/3)&&Math.abs(index-empty)===1);
  if(!adjacent)return;
  [puzzleBoard[index],puzzleBoard[empty]]=[puzzleBoard[empty],puzzleBoard[index]];
- setMoves(gameMoveCount+1);
- renderPuzzle();
+ setMoves(gameMoveCount+1);renderPuzzle();
  if(puzzleSolved())completeLevel("Puzzle solved! Moves: "+gameMoveCount+".");
 }
 
 /* ---------------- QUICK TAP ---------------- */
-let tapHits=0;
-let tapBonusHits=0;
-let tapGoal=5;
-let tapMoveInterval=null;
-let tapIsBonus=false;
+let tapHits=0,tapBonusHits=0,tapGoal=5,tapIsBonus=false;
 function moveTapTarget(){
- const target=document.getElementById("tapTarget");
- const arena=document.getElementById("tapArena");
- const maxX=Math.max(0,arena.clientWidth-75);
- const maxY=Math.max(0,arena.clientHeight-75);
+ const target=document.getElementById("tapTarget"),arena=document.getElementById("tapArena");
+ const maxX=Math.max(0,arena.clientWidth-75),maxY=Math.max(0,arena.clientHeight-75);
  target.style.left=Math.floor(Math.random()*maxX)+"px";
  target.style.top=Math.floor(Math.random()*maxY)+"px";
  tapIsBonus=Math.random()<0.22;
@@ -771,133 +814,139 @@ function moveTapTarget(){
 }
 function startTap(){
  document.getElementById("tapArea").classList.remove("hidden");
- document.getElementById("gameInstructions").textContent=
-  "১৫ সেকেন্ডের মধ্যে যতগুলো টার্গেট সম্ভব আঘাত করো। ⭐ বোনাস টার্গেট অতিরিক্ত Hit দেবে।";
- tapHits=0;
- tapBonusHits=0;
+ document.getElementById("gameInstructions").textContent="১৫ সেকেন্ডের মধ্যে যতগুলো টার্গেট সম্ভব আঘাত করো। ⭐ বোনাস টার্গেট অতিরিক্ত Hit দেবে।";
+ tapHits=0;tapBonusHits=0;
  tapGoal=Math.min(5+Math.floor((currentLevel-1)*0.8),84);
  document.getElementById("tapHits").textContent="0";
  document.getElementById("tapGoal").textContent=tapGoal;
  document.getElementById("tapBonus").textContent="0";
- const target=document.getElementById("tapTarget");
- target.style.display="flex";
- moveTapTarget();
- gameRunning=true;
- startClock();
- let remaining=15;
- document.getElementById("gameTimer").textContent=remaining;
+ document.getElementById("tapTarget").style.display="flex";
+ moveTapTarget();gameRunning=true;
+ let remaining=15;document.getElementById("gameTimer").textContent=remaining;
  gameTimerInterval=setInterval(()=>{
   if(!gameRunning)return;
-  remaining--;
-  document.getElementById("gameTimer").textContent=remaining;
+  remaining--;document.getElementById("gameTimer").textContent=remaining;
   if(remaining<=0){
-   clearGameTimers();
-   if(tapHits>=tapGoal){
-    gameRunning=true;
-    completeLevel("Challenge complete! Total hits: "+tapHits+".");
-   }else{
-    failLevel("Time is up! You got "+tapHits+" hits. Target: "+tapGoal+".");
-   }
+   if(tapHits>=tapGoal)completeLevel("Challenge complete! Total hits: "+tapHits+".");
+   else failLevel("Time is up! You got "+tapHits+" hits. Target: "+tapGoal+".");
   }
  },1000);
- tapMoveInterval=setInterval(()=>{
-  if(gameRunning)moveTapTarget();
- },1100);
- gameTimeouts.push(tapMoveInterval);
+ gameIntervals.push(setInterval(()=>{if(gameRunning)moveTapTarget()},1100));
 }
 function hitTarget(){
  if(!gameRunning)return;
- if(tapIsBonus){
-  tapHits+=2;
-  tapBonusHits++;
-  document.getElementById("tapBonus").textContent=tapBonusHits;
- }else{
-  tapHits++;
- }
+ if(tapIsBonus){tapHits+=2;tapBonusHits++;document.getElementById("tapBonus").textContent=tapBonusHits}
+ else tapHits++;
  document.getElementById("tapHits").textContent=tapHits;
- setMoves(tapHits);
- moveTapTarget();
+ setMoves(tapHits);moveTapTarget();
 }
 window.hitTarget=hitTarget;
 
-/* ---------------- QUIZ ---------------- */
+/* ---------------- QUIZ QUESTIONS ---------------- */
 const quizQuestions={
- bn:[
-  {d:"easy",q:"বাংলাদেশের রাজধানী কোনটি?",o:["ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী"],a:0},
-  {d:"easy",q:"সূর্য কোন দিক থেকে ওঠে?",o:["পশ্চিম","পূর্ব","উত্তর","দক্ষিণ"],a:1},
-  {d:"easy",q:"পৃথিবীর প্রাকৃতিক উপগ্রহ কোনটি?",o:["মঙ্গল","চাঁদ","সূর্য","শুক্র"],a:1},
-  {d:"easy",q:"এক সপ্তাহে কয় দিন?",o:["৫","৬","৭","৮"],a:2},
-  {d:"easy",q:"কোন প্রাণীকে মরুভূমির জাহাজ বলা হয়?",o:["ঘোড়া","উট","হাতি","জিরাফ"],a:1},
-  {d:"medium",q:"পানির রাসায়নিক সংকেত কী?",o:["CO2","O2","H2O","NaCl"],a:2},
-  {d:"medium",q:"মানবদেহের সবচেয়ে বড় অঙ্গ কোনটি?",o:["হৃদপিণ্ড","ত্বক","ফুসফুস","যকৃত"],a:1},
-  {d:"medium",q:"পৃথিবীর সবচেয়ে বড় মহাসাগর কোনটি?",o:["আটলান্টিক","ভারত","প্রশান্ত","আর্কটিক"],a:2},
-  {d:"medium",q:"উদ্ভিদ খাদ্য তৈরি করে কোন প্রক্রিয়ায়?",o:["শ্বসন","সালোকসংশ্লেষণ","বাষ্পীভবন","পরিপাক"],a:1},
-  {d:"medium",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",o:["গোলাপ","শাপলা","জবা","সূর্যমুখী"],a:1},
-  {d:"hard",q:"আলোর গতি প্রায় কত?",o:["৩ লক্ষ কিমি/সেকেন্ড","৩০ হাজার কিমি/সেকেন্ড","৩ হাজার কিমি/সেকেন্ড","৩০ লক্ষ কিমি/সেকেন্ড"],a:0},
-  {d:"hard",q:"মানবদেহে রক্ত পরিশোধনে প্রধান ভূমিকা রাখে কোন অঙ্গ?",o:["কিডনি","পাকস্থলী","হৃদপিণ্ড","ত্বক"],a:0},
-  {d:"hard",q:"পর্যায় সারণির প্রথম মৌল কোনটি?",o:["হিলিয়াম","অক্সিজেন","হাইড্রোজেন","কার্বন"],a:2},
-  {d:"hard",q:"DNA-এর পূর্ণরূপ কী?",o:["ডিঅক্সিরাইবোনিউক্লিক অ্যাসিড","ডাইনামিক নিউক্লিয়ার অ্যাসিড","ডাবল নিউট্রাল অ্যাটম","ডিজিটাল নিউক্লিক অ্যাসিড"],a:0},
-  {d:"hard",q:"পৃথিবীর বায়ুমণ্ডলে সবচেয়ে বেশি কোন গ্যাস আছে?",o:["অক্সিজেন","কার্বন ডাই-অক্সাইড","নাইট্রোজেন","হাইড্রোজেন"],a:2}
- ],
- en:[
-  {d:"easy",q:"What is the capital of Bangladesh?",o:["Dhaka","Chattogram","Khulna","Rajshahi"],a:0},
-  {d:"easy",q:"From which direction does the Sun rise?",o:["West","East","North","South"],a:1},
-  {d:"easy",q:"What is Earth's natural satellite?",o:["Mars","Moon","Sun","Venus"],a:1},
-  {d:"easy",q:"How many days are there in a week?",o:["5","6","7","8"],a:2},
-  {d:"easy",q:"Which animal is called the ship of the desert?",o:["Horse","Camel","Elephant","Giraffe"],a:1},
-  {d:"medium",q:"What is the chemical formula of water?",o:["CO2","O2","H2O","NaCl"],a:2},
-  {d:"medium",q:"What is the largest organ of the human body?",o:["Heart","Skin","Lungs","Liver"],a:1},
-  {d:"medium",q:"Which is the largest ocean on Earth?",o:["Atlantic","Indian","Pacific","Arctic"],a:2},
-  {d:"medium",q:"By which process do plants make food?",o:["Respiration","Photosynthesis","Evaporation","Digestion"],a:1},
-  {d:"medium",q:"What is the national flower of Bangladesh?",o:["Rose","Water lily","Hibiscus","Sunflower"],a:1},
-  {d:"hard",q:"Approximately what is the speed of light?",o:["300,000 km/s","30,000 km/s","3,000 km/s","3 million km/s"],a:0},
-  {d:"hard",q:"Which organ mainly filters blood in the human body?",o:["Kidney","Stomach","Heart","Skin"],a:0},
-  {d:"hard",q:"Which is the first element in the periodic table?",o:["Helium","Oxygen","Hydrogen","Carbon"],a:2},
-  {d:"hard",q:"What does DNA stand for?",o:["Deoxyribonucleic acid","Dynamic nuclear acid","Double neutral atom","Digital nucleic acid"],a:0},
-  {d:"hard",q:"Which gas is most abundant in Earth's atmosphere?",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:2}
- ]
+bn:[
+{d:"easy",q:"বাংলাদেশের রাজধানী কোনটি?",o:["ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী"],a:0},
+{d:"easy",q:"সূর্য কোন দিক থেকে ওঠে?",o:["পশ্চিম","পূর্ব","উত্তর","দক্ষিণ"],a:1},
+{d:"easy",q:"পৃথিবীর প্রাকৃতিক উপগ্রহ কোনটি?",o:["মঙ্গল","চাঁদ","সূর্য","শুক্র"],a:1},
+{d:"easy",q:"এক সপ্তাহে কয় দিন?",o:["৫","৬","৭","৮"],a:2},
+{d:"easy",q:"কোন প্রাণীকে মরুভূমির জাহাজ বলা হয়?",o:["ঘোড়া","উট","হাতি","জিরাফ"],a:1},
+{d:"easy",q:"এক বছরে সাধারণত কয় মাস?",o:["১০","১১","১২","১৩"],a:2},
+{d:"easy",q:"মানুষের কয়টি চোখ?",o:["১টি","২টি","৩টি","৪টি"],a:1},
+{d:"easy",q:"কোনটি ফল?",o:["গাজর","আলু","আম","পেঁয়াজ"],a:2},
+{d:"easy",q:"দিনের আলো প্রধানত কোথা থেকে আসে?",o:["চাঁদ","সূর্য","তারা","মঙ্গল"],a:1},
+{d:"easy",q:"বাংলাদেশের জাতীয় প্রাণী কোনটি?",o:["হাতি","রয়েল বেঙ্গল টাইগার","হরিণ","সিংহ"],a:1},
+
+{d:"medium",q:"পানির রাসায়নিক সংকেত কী?",o:["CO2","O2","H2O","NaCl"],a:2},
+{d:"medium",q:"মানবদেহের সবচেয়ে বড় অঙ্গ কোনটি?",o:["হৃদপিণ্ড","ত্বক","ফুসফুস","যকৃত"],a:1},
+{d:"medium",q:"পৃথিবীর সবচেয়ে বড় মহাসাগর কোনটি?",o:["আটলান্টিক","ভারত","প্রশান্ত","আর্কটিক"],a:2},
+{d:"medium",q:"উদ্ভিদ খাদ্য তৈরি করে কোন প্রক্রিয়ায়?",o:["শ্বসন","সালোকসংশ্লেষণ","বাষ্পীভবন","পরিপাক"],a:1},
+{d:"medium",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",o:["গোলাপ","শাপলা","জবা","সূর্যমুখী"],a:1},
+{d:"medium",q:"পৃথিবী সূর্যকে একবার প্রদক্ষিণ করতে কত সময় নেয়?",o:["এক দিন","এক মাস","প্রায় এক বছর","দশ বছর"],a:2},
+{d:"medium",q:"মানবদেহে রক্ত পাম্প করে কোন অঙ্গ?",o:["মস্তিষ্ক","হৃদপিণ্ড","কিডনি","ফুসফুস"],a:1},
+{d:"medium",q:"কোন গ্রহকে লাল গ্রহ বলা হয়?",o:["শুক্র","মঙ্গল","বৃহস্পতি","শনি"],a:1},
+{d:"medium",q:"বাংলাদেশের মুদ্রার নাম কী?",o:["রুপি","টাকা","রিয়াল","দিনার"],a:1},
+{d:"medium",q:"শব্দ কোন মাধ্যমে চলতে পারে না?",o:["বায়ু","পানি","শূন্যস্থান","লোহা"],a:2},
+
+{d:"hard",q:"আলোর গতি প্রায় কত?",o:["৩ লক্ষ কিমি/সেকেন্ড","৩০ হাজার কিমি/সেকেন্ড","৩ হাজার কিমি/সেকেন্ড","৩০ লক্ষ কিমি/সেকেন্ড"],a:0},
+{d:"hard",q:"মানবদেহে রক্ত পরিশোধনে প্রধান ভূমিকা রাখে কোন অঙ্গ?",o:["কিডনি","পাকস্থলী","হৃদপিণ্ড","ত্বক"],a:0},
+{d:"hard",q:"পর্যায় সারণির প্রথম মৌল কোনটি?",o:["হিলিয়াম","অক্সিজেন","হাইড্রোজেন","কার্বন"],a:2},
+{d:"hard",q:"DNA-এর পূর্ণরূপ কী?",o:["ডিঅক্সিরাইবোনিউক্লিক অ্যাসিড","ডাইনামিক নিউক্লিয়ার অ্যাসিড","ডাবল নিউট্রাল অ্যাটম","ডিজিটাল নিউক্লিক অ্যাসিড"],a:0},
+{d:"hard",q:"পৃথিবীর বায়ুমণ্ডলে সবচেয়ে বেশি কোন গ্যাস আছে?",o:["অক্সিজেন","কার্বন ডাই-অক্সাইড","নাইট্রোজেন","হাইড্রোজেন"],a:2},
+{d:"hard",q:"মানবদেহের স্বাভাবিক দেহতাপমাত্রা প্রায় কত?",o:["২৭°C","৩৭°C","৪৭°C","৫৭°C"],a:1},
+{d:"hard",q:"কোষের শক্তি উৎপাদনের প্রধান অঙ্গাণু কোনটি?",o:["নিউক্লিয়াস","মাইটোকন্ড্রিয়া","রাইবোসোম","গলজি বডি"],a:1},
+{d:"hard",q:"পৃথিবীর সবচেয়ে গভীর সামুদ্রিক খাদ কোনটি?",o:["মারিয়ানা ট্রেঞ্চ","টঙ্গা ট্রেঞ্চ","পুয়ের্তো রিকো ট্রেঞ্চ","জাভা ট্রেঞ্চ"],a:0},
+{d:"hard",q:"কোন কণার বৈদ্যুতিক আধান ঋণাত্মক?",o:["প্রোটন","নিউট্রন","ইলেকট্রন","ফোটন"],a:2},
+{d:"hard",q:"মানবদেহে মোট ক্রোমোজোম কয়টি?",o:["২৩","৪৪","৪৬","৪৮"],a:2}
+],
+en:[
+{d:"easy",q:"What is the capital of Bangladesh?",o:["Dhaka","Chattogram","Khulna","Rajshahi"],a:0},
+{d:"easy",q:"From which direction does the Sun rise?",o:["West","East","North","South"],a:1},
+{d:"easy",q:"What is Earth's natural satellite?",o:["Mars","Moon","Sun","Venus"],a:1},
+{d:"easy",q:"How many days are there in a week?",o:["5","6","7","8"],a:2},
+{d:"easy",q:"Which animal is called the ship of the desert?",o:["Horse","Camel","Elephant","Giraffe"],a:1},
+{d:"easy",q:"How many months are there in a year?",o:["10","11","12","13"],a:2},
+{d:"easy",q:"How many eyes does a human usually have?",o:["1","2","3","4"],a:1},
+{d:"easy",q:"Which one is a fruit?",o:["Carrot","Potato","Mango","Onion"],a:2},
+{d:"easy",q:"What is the main source of daylight?",o:["Moon","Sun","Stars","Mars"],a:1},
+{d:"easy",q:"What is the national animal of Bangladesh?",o:["Elephant","Royal Bengal Tiger","Deer","Lion"],a:1},
+
+{d:"medium",q:"What is the chemical formula of water?",o:["CO2","O2","H2O","NaCl"],a:2},
+{d:"medium",q:"What is the largest organ of the human body?",o:["Heart","Skin","Lungs","Liver"],a:1},
+{d:"medium",q:"Which is the largest ocean on Earth?",o:["Atlantic","Indian","Pacific","Arctic"],a:2},
+{d:"medium",q:"By which process do plants make food?",o:["Respiration","Photosynthesis","Evaporation","Digestion"],a:1},
+{d:"medium",q:"What is the national flower of Bangladesh?",o:["Rose","Water lily","Hibiscus","Sunflower"],a:1},
+{d:"medium",q:"How long does Earth take to orbit the Sun?",o:["One day","One month","About one year","Ten years"],a:2},
+{d:"medium",q:"Which organ pumps blood in the human body?",o:["Brain","Heart","Kidney","Lungs"],a:1},
+{d:"medium",q:"Which planet is known as the Red Planet?",o:["Venus","Mars","Jupiter","Saturn"],a:1},
+{d:"medium",q:"What is the currency of Bangladesh?",o:["Rupee","Taka","Riyal","Dinar"],a:1},
+{d:"medium",q:"In which medium can sound not travel?",o:["Air","Water","Vacuum","Iron"],a:2},
+
+{d:"hard",q:"Approximately what is the speed of light?",o:["300,000 km/s","30,000 km/s","3,000 km/s","3 million km/s"],a:0},
+{d:"hard",q:"Which organ mainly filters blood in the human body?",o:["Kidney","Stomach","Heart","Skin"],a:0},
+{d:"hard",q:"Which is the first element in the periodic table?",o:["Helium","Oxygen","Hydrogen","Carbon"],a:2},
+{d:"hard",q:"What does DNA stand for?",o:["Deoxyribonucleic acid","Dynamic nuclear acid","Double neutral atom","Digital nucleic acid"],a:0},
+{d:"hard",q:"Which gas is most abundant in Earth's atmosphere?",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:2},
+{d:"hard",q:"What is the average normal human body temperature?",o:["27°C","37°C","47°C","57°C"],a:1},
+{d:"hard",q:"Which cell organelle is mainly responsible for energy production?",o:["Nucleus","Mitochondrion","Ribosome","Golgi body"],a:1},
+{d:"hard",q:"What is the deepest ocean trench on Earth?",o:["Mariana Trench","Tonga Trench","Puerto Rico Trench","Java Trench"],a:0},
+{d:"hard",q:"Which particle has a negative electric charge?",o:["Proton","Neutron","Electron","Photon"],a:2},
+{d:"hard",q:"How many chromosomes are normally found in human body cells?",o:["23","44","46","48"],a:2}
+]
 };
-let quizSet=[];
-let quizIndex=0;
-let quizCorrect=0;
-let quizAnswered=false;
-let quizSkipped=0;
+
+let quizSet=[],quizIndex=0,quizCorrect=0,quizAnswered=false,quizSkipped=0;
 function startQuiz(){
  const lang=document.getElementById("quizLanguage").value;
  const difficulty=document.getElementById("quizDifficulty").value;
  quizSet=quizQuestions[lang].filter(q=>q.d===difficulty).sort(()=>Math.random()-.5).slice(0,10);
- quizIndex=0;
- quizCorrect=0;
- quizSkipped=0;
+ quizIndex=0;quizCorrect=0;quizSkipped=0;
  document.getElementById("quizSetup").classList.add("hidden");
  document.getElementById("quizResult").classList.add("hidden");
  document.getElementById("quizPlay").classList.remove("hidden");
  renderQuizQuestion();
 }
 window.startQuiz=startQuiz;
+
 function renderQuizQuestion(){
  quizAnswered=false;
  const q=quizSet[quizIndex];
- document.getElementById("quizCount").textContent=
-  `Question ${quizIndex+1} of ${quizSet.length}`;
+ document.getElementById("quizCount").textContent=`Question ${quizIndex+1} of ${quizSet.length}`;
  document.getElementById("quizQuestion").textContent=q.q;
- document.getElementById("quizFeedback").innerHTML="";
+ document.getElementById("quizFeedback").textContent="";
+ document.getElementById("quizFeedback").className="";
  document.getElementById("quizNext").disabled=true;
- const box=document.getElementById("quizOptions");
- box.innerHTML="";
+ const box=document.getElementById("quizOptions");box.innerHTML="";
  q.o.forEach((option,i)=>{
   const btn=document.createElement("button");
   btn.className="quiz-option";
   btn.textContent=String.fromCharCode(65+i)+". "+option;
-  btn.addEventListener("click",()=>answerQuiz(i));
-  box.appendChild(btn);
+  btn.addEventListener("click",()=>answerQuiz(i));box.appendChild(btn);
  });
 }
 function answerQuiz(index){
  if(quizAnswered)return;
  quizAnswered=true;
- const q=quizSet[quizIndex];
- const buttons=document.querySelectorAll(".quiz-option");
+ const q=quizSet[quizIndex],buttons=document.querySelectorAll(".quiz-option");
  buttons.forEach((b,i)=>{
   b.disabled=true;
   if(i===q.a)b.style.background="#167b5b";
@@ -906,52 +955,51 @@ function answerQuiz(index){
  const lang=document.getElementById("quizLanguage").value;
  const feedback=document.getElementById("quizFeedback");
  if(index===q.a){
-  quizCorrect++;
-  feedback.className="feedback good";
+  quizCorrect++;feedback.className="feedback good";
   feedback.textContent=lang==="bn"?"সঠিক উত্তর!":"Correct answer!";
  }else{
   feedback.className="feedback bad";
-  feedback.textContent=lang==="bn"?
-   "ভুল উত্তর। সঠিক উত্তর: "+q.o[q.a]:
-   "Incorrect. Correct answer: "+q.o[q.a];
+  feedback.textContent=lang==="bn"?"ভুল উত্তর। সঠিক উত্তর: "+q.o[q.a]:"Incorrect. Correct answer: "+q.o[q.a];
  }
  document.getElementById("quizNext").disabled=false;
 }
 function skipQuestion(){
- if(!quizAnswered){
-  quizSkipped++;
-  quizAnswered=true;
-  const q=quizSet[quizIndex];
-  document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
-  const lang=document.getElementById("quizLanguage").value;
-  const feedback=document.getElementById("quizFeedback");
-  feedback.className="feedback";
-  feedback.textContent=lang==="bn"?
-   "প্রশ্নটি বাদ দেওয়া হয়েছে। সঠিক উত্তর: "+q.o[q.a]:
-   "Skipped. Correct answer: "+q.o[q.a];
-  document.getElementById("quizNext").disabled=false;
- }
+ if(quizAnswered)return;
+ quizSkipped++;quizAnswered=true;
+ const q=quizSet[quizIndex];
+ document.querySelectorAll(".quiz-option").forEach(b=>b.disabled=true);
+ const lang=document.getElementById("quizLanguage").value;
+ const feedback=document.getElementById("quizFeedback");
+ feedback.className="feedback";
+ feedback.textContent=lang==="bn"?"প্রশ্নটি বাদ দেওয়া হয়েছে। সঠিক উত্তর: "+q.o[q.a]:"Skipped. Correct answer: "+q.o[q.a];
+ document.getElementById("quizNext").disabled=false;
 }
 window.skipQuestion=skipQuestion;
+
 function nextQuestion(){
  if(!quizAnswered)return;
  quizIndex++;
- if(quizIndex<quizSet.length){
-  renderQuizQuestion();
- }else{
-  finishQuiz();
+ if(quizIndex===5){
+  showAdGate(()=>renderQuizQuestion());
+  return;
  }
+ if(quizIndex===10){
+  showAdGate(()=>finishQuiz());
+  return;
+ }
+ if(quizIndex<quizSet.length)renderQuizQuestion();
+ else finishQuiz();
 }
 window.nextQuestion=nextQuestion;
+
 function finishQuiz(){
  document.getElementById("quizPlay").classList.add("hidden");
  document.getElementById("quizResult").classList.remove("hidden");
  const lang=document.getElementById("quizLanguage").value;
- document.getElementById("quizScore").textContent=
-  `${quizCorrect} / ${quizSet.length}`;
+ document.getElementById("quizScore").textContent=`${quizCorrect} / ${quizSet.length}`;
  document.getElementById("quizMessage").textContent=lang==="bn"?
-  `সঠিক উত্তর: ${quizCorrect} | বাদ: ${quizSkipped} | ভুল: ${quizSet.length-quizCorrect-quizSkipped}`:
-  `Correct: ${quizCorrect} | Skipped: ${quizSkipped} | Incorrect: ${quizSet.length-quizCorrect-quizSkipped}`;
+ `সঠিক উত্তর: ${quizCorrect} | বাদ: ${quizSkipped} | ভুল: ${quizSet.length-quizCorrect-quizSkipped}`:
+ `Correct: ${quizCorrect} | Skipped: ${quizSkipped} | Incorrect: ${quizSet.length-quizCorrect-quizSkipped}`;
 }
 </script>
 
