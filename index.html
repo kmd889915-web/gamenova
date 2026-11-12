@@ -5,64 +5,214 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GameNova - Gaming & Quiz</title>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#0b1020;color:#fff}
-header{padding:20px;display:flex;justify-content:space-between;align-items:center;background:#121a30;border-bottom:1px solid #26334f}
-.logo{font-size:25px;font-weight:bold;color:#8b7cff}
-button{border:0;padding:12px 18px;border-radius:10px;background:#7657ff;color:white;font-weight:bold;cursor:pointer}
-button:disabled{opacity:.6}
-main{max-width:1050px;margin:auto;padding:25px 16px}
-.hero{text-align:center;padding:35px 10px}
-.hero h1{font-size:36px;margin-bottom:10px}
+body{
+ margin:0;
+ font-family:Arial,sans-serif;
+ background:#0b1020;
+ color:white
+}
+header{
+ padding:18px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ background:#121a30;
+ border-bottom:1px solid #26334f;
+ flex-wrap:wrap;
+ gap:12px
+}
+.logo{font-size:24px;font-weight:bold;color:#8b7cff}
+button{
+ border:0;
+ padding:12px 17px;
+ border-radius:10px;
+ background:#7657ff;
+ color:white;
+ font-weight:bold;
+ cursor:pointer
+}
+button:disabled{opacity:.5}
+main{max-width:1050px;margin:auto;padding:22px 16px}
+.hero{text-align:center;padding:30px 10px}
+.hero h1{font-size:32px}
 .hero p,.card p{color:#aab5d0}
-.section-title{margin-top:35px;font-size:23px}
-.games{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-.card{background:#151f38;border:1px solid #293858;border-radius:16px;padding:22px;text-align:center}
-.emoji{font-size:45px}
-.card h3{margin:12px 0}
-.card p{font-size:14px}
+.section-title{margin-top:30px}
+.games{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:16px
+}
+.card,.profile-card{
+ background:#151f38;
+ border:1px solid #293858;
+ border-radius:16px;
+ padding:20px;
+ text-align:center
+}
+.emoji{font-size:42px}
 .card button{width:100%;margin-top:10px}
-.quiz{margin-top:25px;padding:25px;text-align:center;border-radius:16px;background:linear-gradient(120deg,#392a83,#173e70)}
+.quiz{
+ margin-top:24px;
+ padding:24px;
+ text-align:center;
+ border-radius:16px;
+ background:linear-gradient(120deg,#392a83,#173e70)
+}
 #userArea{display:none;align-items:center;gap:10px}
 #userName{font-size:13px;color:#cbd5ee}
-#message{color:#aab5d0;text-align:center;margin-top:20px;overflow-wrap:anywhere}
+#dashboard{display:none}
+.profile-card{margin-bottom:15px;text-align:left}
+.info{
+ padding:13px;
+ margin-top:10px;
+ background:#202c49;
+ border-radius:10px;
+ overflow-wrap:anywhere
+}
+.info span{color:#aab5d0;font-size:13px}
+.info strong{display:block;margin-top:6px}
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+ gap:14px
+}
+#message{
+ color:#aab5d0;
+ text-align:center;
+ margin-top:20px;
+ overflow-wrap:anywhere
+}
 footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
 </style>
 </head>
+
 <body>
+
 <header>
  <div class="logo">🎮 GameNova</div>
- <div>
+
+ <div id="authButtons">
   <button id="loginBtn">Google Login</button>
-  <div id="userArea">
-   <span id="userName"></span>
-   <button id="logoutBtn">Logout</button>
-  </div>
+ </div>
+
+ <div id="userArea">
+  <span id="userName"></span>
+  <button id="dashboardBtn">Dashboard</button>
+  <button id="logoutBtn">Logout</button>
  </div>
 </header>
+
 <main>
+
+<section id="homePage">
  <section class="hero">
   <h1>Welcome to GameNova</h1>
   <p>Play Games • Take Quizzes • Challenge Your Mind</p>
  </section>
+
  <h2 class="section-title">🎯 Choose Your Game</h2>
+
  <section class="games">
-  <div class="card"><div class="emoji">🧠</div><h3>Memory Match</h3><p>Test your memory and match the cards.</p><button class="playBtn">Play Game</button></div>
-  <div class="card"><div class="emoji">🔢</div><h3>Number Puzzle</h3><p>Arrange the numbers and solve the puzzle.</p><button class="playBtn">Play Game</button></div>
-  <div class="card"><div class="emoji">⚡</div><h3>Quick Tap Challenge</h3><p>Test your speed and reaction time.</p><button class="playBtn">Play Game</button></div>
+  <div class="card">
+   <div class="emoji">🧠</div>
+   <h3>Memory Match</h3>
+   <p>Test your memory and match the cards.</p>
+   <button class="playBtn">Play Game</button>
+  </div>
+
+  <div class="card">
+   <div class="emoji">🔢</div>
+   <h3>Number Puzzle</h3>
+   <p>Arrange the numbers and solve the puzzle.</p>
+   <button class="playBtn">Play Game</button>
+  </div>
+
+  <div class="card">
+   <div class="emoji">⚡</div>
+   <h3>Quick Tap Challenge</h3>
+   <p>Test your speed and reaction time.</p>
+   <button class="playBtn">Play Game</button>
+  </div>
  </section>
+
  <section class="quiz">
   <h2>📝 Quiz Zone</h2>
   <p>Challenge yourself with General Knowledge questions.</p>
   <button class="playBtn">Start Quiz</button>
  </section>
- <p id="message">Please login with Google to start playing.</p>
+</section>
+
+<section id="dashboard">
+ <h2>👤 My Dashboard</h2>
+
+ <div class="profile-card">
+  <h3>My Profile</h3>
+
+  <div class="info">
+   <span>User Name</span>
+   <strong id="profileName">Loading...</strong>
+  </div>
+
+  <div class="info">
+   <span>Gmail Account</span>
+   <strong id="profileEmail">Loading...</strong>
+  </div>
+
+  <div class="info">
+   <span>Permanent User ID</span>
+   <strong id="profileUID">Loading...</strong>
+  </div>
+ </div>
+
+ <div class="grid">
+  <div class="profile-card">
+   <h3>⭐ Total Points</h3>
+   <h2>0</h2>
+   <p>Points system will be connected later.</p>
+  </div>
+
+  <div class="profile-card">
+   <h3>🏆 Leaderboard Rank</h3>
+   <h2>Not available yet</h2>
+  </div>
+
+  <div class="profile-card">
+   <h3>🎮 Game Progress</h3>
+   <p>Your game progress will appear here.</p>
+  </div>
+
+  <div class="profile-card">
+   <h3>📝 Quiz History</h3>
+   <p>Your quiz results will appear here.</p>
+  </div>
+
+  <div class="profile-card">
+   <h3>🔔 Notifications</h3>
+   <p>You have no notifications yet.</p>
+  </div>
+
+  <div class="profile-card">
+   <h3>🔗 Referral</h3>
+   <p>Your referral link will appear here.</p>
+  </div>
+ </div>
+
+ <button id="backBtn">← Back to Home</button>
+</section>
+
+<p id="message">Checking login...</p>
+
 </main>
+
 <footer>© 2026 GameNova. All rights reserved.</footer>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+
+import { initializeApp } from
+"https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 
 import {
  getAuth,
@@ -90,56 +240,105 @@ provider.setCustomParameters({prompt:"select_account"});
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
+const dashboardBtn = document.getElementById("dashboardBtn");
+const backBtn = document.getElementById("backBtn");
+
 const userArea = document.getElementById("userArea");
+const authButtons = document.getElementById("authButtons");
 const userName = document.getElementById("userName");
 const message = document.getElementById("message");
 
-loginBtn.addEventListener("click", async () => {
+const homePage = document.getElementById("homePage");
+const dashboard = document.getElementById("dashboard");
+
+let authReady = false;
+let currentUser = null;
+
+function showHome(){
+ homePage.style.display = "block";
+ dashboard.style.display = "none";
+}
+
+function showDashboard(){
+ if(!authReady || !currentUser){
+  message.textContent = "Please login with Google first.";
+  showHome();
+  return;
+ }
+
+ homePage.style.display = "none";
+ dashboard.style.display = "block";
+
+ document.getElementById("profileName").textContent =
+ currentUser.displayName || "Player";
+
+ document.getElementById("profileEmail").textContent =
+ currentUser.email || "Not available";
+
+ document.getElementById("profileUID").textContent =
+ currentUser.uid;
+}
+
+loginBtn.addEventListener("click", async()=>{
  loginBtn.disabled = true;
  message.textContent = "Connecting to Google...";
 
- try {
-  const result = await signInWithPopup(auth, provider);
-  message.textContent = "Welcome! Login successful.";
-  userName.textContent = result.user.displayName || "Player";
- } catch (error) {
-  console.error("Login error:", error);
-  message.textContent = "Login error: " + error.code + " - " + error.message;
- } finally {
+ try{
+  await signInWithPopup(auth,provider);
+  message.textContent = "Login successful!";
+ }catch(error){
+  message.textContent = "Login error: " + error.code;
+ }finally{
   loginBtn.disabled = false;
  }
 });
 
-logoutBtn.addEventListener("click", async () => {
- try {
+logoutBtn.addEventListener("click",async()=>{
+ try{
   await signOut(auth);
- } catch (error) {
+  showHome();
+ }catch(error){
   message.textContent = "Logout error: " + error.message;
  }
 });
 
-onAuthStateChanged(auth, user => {
- if (user) {
-  loginBtn.style.display = "none";
+dashboardBtn.addEventListener("click",showDashboard);
+backBtn.addEventListener("click",showHome);
+
+onAuthStateChanged(auth,user=>{
+ currentUser = user;
+ authReady = true;
+
+ if(user){
+  authButtons.style.display = "none";
   userArea.style.display = "flex";
   userName.textContent = user.displayName || "Player";
   message.textContent = "Welcome! You are logged in.";
- } else {
-  loginBtn.style.display = "inline-block";
+ }else{
+  authButtons.style.display = "block";
   userArea.style.display = "none";
   message.textContent = "Please login with Google to start playing.";
+  showHome();
  }
 });
 
-document.querySelectorAll(".playBtn").forEach(button => {
- button.addEventListener("click", () => {
-  if (!auth.currentUser) {
+document.querySelectorAll(".playBtn").forEach(button=>{
+ button.addEventListener("click",()=>{
+  if(!authReady){
+   message.textContent = "Checking login. Please wait...";
+   return;
+  }
+
+  if(!currentUser){
    message.textContent = "Please login with Google before playing.";
    return;
   }
-  message.textContent = "This game is being prepared. Please check back soon!";
+
+  message.textContent =
+  "This game is being prepared. Please check back soon!";
  });
 });
+
 </script>
 </body>
 </html>
