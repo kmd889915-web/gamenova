@@ -8,12 +8,14 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
  margin:0;
  font-family:Arial,sans-serif;
  background:#0b1020;
  color:white
 }
+
 header{
  padding:18px;
  display:flex;
@@ -24,7 +26,13 @@ header{
  flex-wrap:wrap;
  gap:12px
 }
-.logo{font-size:24px;font-weight:bold;color:#8b7cff}
+
+.logo{
+ font-size:24px;
+ font-weight:bold;
+ color:#8b7cff
+}
+
 button{
  border:0;
  padding:12px 17px;
@@ -34,17 +42,32 @@ button{
  font-weight:bold;
  cursor:pointer
 }
+
 button:disabled{opacity:.5}
-main{max-width:1050px;margin:auto;padding:22px 16px}
-.hero{text-align:center;padding:30px 10px}
+
+main{
+ max-width:1050px;
+ margin:auto;
+ padding:22px 16px
+}
+
+.hero{
+ text-align:center;
+ padding:30px 10px
+}
+
 .hero h1{font-size:32px}
+
 .hero p,.card p{color:#aab5d0}
+
 .section-title{margin-top:30px}
+
 .games{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
  gap:16px
 }
+
 .card,.profile-card{
  background:#151f38;
  border:1px solid #293858;
@@ -52,8 +75,14 @@ main{max-width:1050px;margin:auto;padding:22px 16px}
  padding:20px;
  text-align:center
 }
+
 .emoji{font-size:42px}
-.card button{width:100%;margin-top:10px}
+
+.card button{
+ width:100%;
+ margin-top:10px
+}
+
 .quiz{
  margin-top:24px;
  padding:24px;
@@ -61,10 +90,25 @@ main{max-width:1050px;margin:auto;padding:22px 16px}
  border-radius:16px;
  background:linear-gradient(120deg,#392a83,#173e70)
 }
-#userArea{display:none;align-items:center;gap:10px}
-#userName{font-size:13px;color:#cbd5ee}
+
+#authButtons,#userArea{
+ display:none;
+ align-items:center;
+ gap:10px
+}
+
+#userName{
+ font-size:13px;
+ color:#cbd5ee
+}
+
 #dashboard{display:none}
-.profile-card{margin-bottom:15px;text-align:left}
+
+.profile-card{
+ margin-bottom:15px;
+ text-align:left
+}
+
 .info{
  padding:13px;
  margin-top:10px;
@@ -72,20 +116,36 @@ main{max-width:1050px;margin:auto;padding:22px 16px}
  border-radius:10px;
  overflow-wrap:anywhere
 }
-.info span{color:#aab5d0;font-size:13px}
-.info strong{display:block;margin-top:6px}
+
+.info span{
+ color:#aab5d0;
+ font-size:13px
+}
+
+.info strong{
+ display:block;
+ margin-top:6px
+}
+
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
  gap:14px
 }
+
 #message{
  color:#aab5d0;
  text-align:center;
  margin-top:20px;
  overflow-wrap:anywhere
 }
-footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
+
+footer{
+ text-align:center;
+ padding:25px;
+ color:#77839f;
+ font-size:13px
+}
 </style>
 </head>
 
@@ -108,6 +168,7 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
 <main>
 
 <section id="homePage">
+
  <section class="hero">
   <h1>Welcome to GameNova</h1>
   <p>Play Games • Take Quizzes • Challenge Your Mind</p>
@@ -116,6 +177,7 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
  <h2 class="section-title">🎯 Choose Your Game</h2>
 
  <section class="games">
+
   <div class="card">
    <div class="emoji">🧠</div>
    <h3>Memory Match</h3>
@@ -136,6 +198,7 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
    <p>Test your speed and reaction time.</p>
    <button class="playBtn">Play Game</button>
   </div>
+
  </section>
 
  <section class="quiz">
@@ -143,12 +206,15 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
   <p>Challenge yourself with General Knowledge questions.</p>
   <button class="playBtn">Start Quiz</button>
  </section>
+
 </section>
 
 <section id="dashboard">
+
  <h2>👤 My Dashboard</h2>
 
  <div class="profile-card">
+
   <h3>My Profile</h3>
 
   <div class="info">
@@ -165,9 +231,11 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
    <span>Permanent User ID</span>
    <strong id="profileUID">Loading...</strong>
   </div>
+
  </div>
 
  <div class="grid">
+
   <div class="profile-card">
    <h3>⭐ Total Points</h3>
    <h2>0</h2>
@@ -198,9 +266,11 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
    <h3>🔗 Referral</h3>
    <p>Your referral link will appear here.</p>
   </div>
+
  </div>
 
  <button id="backBtn">← Back to Home</button>
+
 </section>
 
 <p id="message">Checking login...</p>
@@ -219,8 +289,12 @@ import {
  GoogleAuthProvider,
  signInWithPopup,
  onAuthStateChanged,
- signOut
-} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+ signOut,
+ setPersistence,
+ browserLocalPersistence
+} from
+"https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+
 
 const firebaseConfig = {
  apiKey: "AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
@@ -232,11 +306,10 @@ const firebaseConfig = {
  measurementId: "G-FBSQYQ8RNY"
 };
 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
-
-provider.setCustomParameters({prompt:"select_account"});
 
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");
@@ -254,12 +327,15 @@ const dashboard = document.getElementById("dashboard");
 let authReady = false;
 let currentUser = null;
 
+
 function showHome(){
  homePage.style.display = "block";
  dashboard.style.display = "none";
 }
 
+
 function showDashboard(){
+
  if(!authReady || !currentUser){
   message.textContent = "Please login with Google first.";
   showHome();
@@ -279,58 +355,126 @@ function showDashboard(){
  currentUser.uid;
 }
 
-loginBtn.addEventListener("click", async()=>{
- loginBtn.disabled = true;
- message.textContent = "Connecting to Google...";
 
- try{
-  await signInWithPopup(auth,provider);
-  message.textContent = "Login successful!";
- }catch(error){
-  message.textContent = "Login error: " + error.code;
- }finally{
-  loginBtn.disabled = false;
- }
-});
+function updateLoginUI(user){
 
-logoutBtn.addEventListener("click",async()=>{
- try{
-  await signOut(auth);
-  showHome();
- }catch(error){
-  message.textContent = "Logout error: " + error.message;
- }
-});
-
-dashboardBtn.addEventListener("click",showDashboard);
-backBtn.addEventListener("click",showHome);
-
-onAuthStateChanged(auth,user=>{
  currentUser = user;
  authReady = true;
 
  if(user){
+
   authButtons.style.display = "none";
   userArea.style.display = "flex";
+
   userName.textContent = user.displayName || "Player";
+
   message.textContent = "Welcome! You are logged in.";
+
  }else{
-  authButtons.style.display = "block";
+
+  authButtons.style.display = "flex";
   userArea.style.display = "none";
+
   message.textContent = "Please login with Google to start playing.";
+
   showHome();
+ }
+}
+
+
+async function startAuthentication(){
+
+ try{
+
+  await setPersistence(auth,browserLocalPersistence);
+
+  onAuthStateChanged(auth,user=>{
+   updateLoginUI(user);
+  },error=>{
+
+   authReady = true;
+   message.textContent = "Authentication error: " + error.code;
+
+   authButtons.style.display = "flex";
+  });
+
+ }catch(error){
+
+  authReady = true;
+
+  message.textContent =
+  "Session error: " + error.code;
+
+  authButtons.style.display = "flex";
+ }
+}
+
+
+loginBtn.addEventListener("click",async()=>{
+
+ if(!authReady){
+  message.textContent = "Please wait...";
+  return;
+ }
+
+ loginBtn.disabled = true;
+ message.textContent = "Connecting to Google...";
+
+ try{
+
+  await signInWithPopup(auth,provider);
+
+  message.textContent = "Login successful!";
+
+ }catch(error){
+
+  console.error("Login error:",error);
+
+  message.textContent =
+  "Login error: " + error.code;
+
+ }finally{
+
+  loginBtn.disabled = false;
  }
 });
 
+
+logoutBtn.addEventListener("click",async()=>{
+
+ try{
+
+  await signOut(auth);
+  showHome();
+
+ }catch(error){
+
+  message.textContent =
+  "Logout error: " + error.message;
+ }
+});
+
+
+dashboardBtn.addEventListener("click",showDashboard);
+
+backBtn.addEventListener("click",showHome);
+
+
 document.querySelectorAll(".playBtn").forEach(button=>{
+
  button.addEventListener("click",()=>{
+
   if(!authReady){
+
    message.textContent = "Checking login. Please wait...";
    return;
   }
 
   if(!currentUser){
-   message.textContent = "Please login with Google before playing.";
+
+   message.textContent =
+   "Please login with Google before playing.";
+
    return;
   }
 
@@ -339,6 +483,10 @@ document.querySelectorAll(".playBtn").forEach(button=>{
  });
 });
 
+
+startAuthentication();
+
 </script>
+
 </body>
 </html>
