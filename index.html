@@ -12,66 +12,142 @@ body{
  margin:0;
  font-family:Arial,sans-serif;
  background:#0b1020;
- color:white
+ color:#fff;
 }
 header{
- padding:18px;
+ background:#121a30;
+ padding:16px;
  display:flex;
  justify-content:space-between;
  align-items:center;
- background:#121a30;
- border-bottom:1px solid #26334f;
  flex-wrap:wrap;
- gap:12px
+ gap:10px;
+ border-bottom:1px solid #263451;
 }
-.logo{font-size:24px;font-weight:bold;color:#8b7cff}
+.logo{font-size:24px;font-weight:bold;color:#61d8ff}
 button{
- border:0;padding:12px 17px;border-radius:10px;
- background:#7657ff;color:white;font-weight:bold;cursor:pointer
+ border:0;
+ border-radius:9px;
+ padding:11px 16px;
+ background:#2878ff;
+ color:white;
+ font-weight:bold;
+ cursor:pointer;
 }
-button:disabled{opacity:.5}
-main{max-width:1050px;margin:auto;padding:22px 16px}
-.hero{text-align:center;padding:30px 10px}
-.hero h1{font-size:32px}
-.hero p,.card p{color:#aab5d0}
-.section-title{margin-top:30px}
-.games{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:16px
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary{background:#263451}
+.danger{background:#c43e58}
+.container{max-width:1050px;margin:auto;padding:18px}
+.hero{
+ background:linear-gradient(135deg,#172b52,#183e61);
+ padding:28px 20px;
+ border-radius:16px;
+ margin:18px 0;
 }
-.card,.profile-card{
- background:#151f38;border:1px solid #293858;
- border-radius:16px;padding:20px;text-align:center
-}
-.emoji{font-size:42px}
-.card button{width:100%;margin-top:10px}
-.quiz{
- margin-top:24px;padding:24px;text-align:center;
- border-radius:16px;background:linear-gradient(120deg,#392a83,#173e70)
-}
-#authButtons,#userArea{
- display:none;align-items:center;gap:10px
-}
-#userName{font-size:13px;color:#cbd5ee}
-#dashboard{display:none}
-.profile-card{margin-bottom:15px;text-align:left}
-.info{
- padding:13px;margin-top:10px;
- background:#202c49;border-radius:10px;overflow-wrap:anywhere
-}
-.info span{color:#aab5d0;font-size:13px}
-.info strong{display:block;margin-top:6px}
+.hero h1{margin-top:0}
 .grid{
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
- gap:14px
+ grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+ gap:15px;
 }
-#message{
- color:#aab5d0;text-align:center;margin-top:20px;
- overflow-wrap:anywhere
+.card{
+ background:#151f36;
+ border:1px solid #293b5c;
+ border-radius:14px;
+ padding:18px;
 }
-footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
+.card h3{margin-top:0;color:#72d9ff}
+.card p{color:#b9c5d9;line-height:1.5}
+.hidden{display:none!important}
+input,select{
+ padding:12px;
+ border-radius:8px;
+ border:1px solid #415574;
+ background:#101a2d;
+ color:white;
+ width:100%;
+ margin:7px 0 12px;
+}
+#message{margin:12px 0;color:#75e2a4}
+.profile{overflow-wrap:anywhere;line-height:1.8}
+.stat{
+ background:#101a2d;
+ border-radius:10px;
+ padding:14px;
+ margin-top:12px;
+}
+#gameArea{margin-top:18px}
+.gameTop{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ flex-wrap:wrap;
+ gap:10px;
+}
+.memoryGrid{
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:8px;
+ max-width:430px;
+ margin:20px auto;
+}
+.memoryTile{
+ min-height:70px;
+ font-size:27px;
+ background:#263b60;
+}
+.memoryTile.matched{background:#176d58}
+.memoryTile.open{background:#2878ff}
+.puzzleGrid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:7px;
+ max-width:330px;
+ margin:20px auto;
+}
+.puzzleTile{
+ aspect-ratio:1;
+ font-size:26px;
+ padding:5px;
+ background:#31558b;
+}
+.puzzleTile.blank{background:#101a2d}
+.tapBox{
+ background:#172b52;
+ padding:30px 15px;
+ border-radius:14px;
+ text-align:center;
+ margin:18px 0;
+}
+.tapButton{
+ width:100%;
+ min-height:130px;
+ font-size:25px;
+ background:#087f76;
+}
+.question{
+ background:#151f36;
+ border:1px solid #293b5c;
+ border-radius:12px;
+ padding:18px;
+ margin:15px 0;
+}
+.option{
+ display:block;
+ width:100%;
+ text-align:left;
+ margin:9px 0;
+ background:#263b60;
+}
+.option.correct{background:#147451}
+.option.wrong{background:#a9344c}
+.small{color:#aebbd1;font-size:14px}
+footer{text-align:center;padding:25px;color:#8190a9}
+@media(max-width:500px){
+ .container{padding:12px}
+ .hero{padding:20px 15px}
+ .memoryTile{min-height:60px;font-size:23px}
+}
 </style>
 </head>
 
@@ -79,160 +155,97 @@ footer{text-align:center;padding:25px;color:#77839f;font-size:13px}
 
 <header>
  <div class="logo">🎮 GameNova</div>
-
- <div id="authButtons">
+ <div>
   <button id="loginBtn">Google Login</button>
- </div>
-
- <div id="userArea">
-  <span id="userName"></span>
-  <button id="dashboardBtn">Dashboard</button>
-  <button id="logoutBtn">Logout</button>
+  <button id="dashboardBtn" class="secondary hidden">Dashboard</button>
+  <button id="logoutBtn" class="danger hidden">Logout</button>
  </div>
 </header>
 
-<main>
+<div class="container">
 
 <section id="homePage">
-
- <section class="hero">
-  <h1>Welcome to GameNova</h1>
-  <p>Play Games • Take Quizzes • Challenge Your Mind</p>
- </section>
-
- <h2 class="section-title">🎯 Choose Your Game</h2>
-
- <section class="games">
-
-  <div class="card">
-   <div class="emoji">🧠</div>
-   <h3>Memory Match</h3>
-   <p>Test your memory and match the cards.</p>
-   <button class="playBtn">Play Game</button>
-  </div>
-
-  <div class="card">
-   <div class="emoji">🔢</div>
-   <h3>Number Puzzle</h3>
-   <p>Arrange the numbers and solve the puzzle.</p>
-   <button class="playBtn">Play Game</button>
-  </div>
-
-  <div class="card">
-   <div class="emoji">⚡</div>
-   <h3>Quick Tap Challenge</h3>
-   <p>Test your speed and reaction time.</p>
-   <button class="playBtn">Play Game</button>
-  </div>
-
- </section>
-
- <section class="quiz">
-  <h2>📝 Quiz Zone</h2>
-  <p>Challenge yourself with General Knowledge questions.</p>
-  <button class="playBtn">Start Quiz</button>
- </section>
-
-</section>
-
-<section id="dashboard">
-
- <h2>👤 My Dashboard</h2>
-
- <div class="profile-card">
-  <h3>My Profile</h3>
-
-  <div class="info">
-   <span>User Name</span>
-   <strong id="profileName">Loading...</strong>
-  </div>
-
-  <div class="info">
-   <span>Gmail Account</span>
-   <strong id="profileEmail">Loading...</strong>
-  </div>
-
-  <div class="info">
-   <span>Permanent User ID</span>
-   <strong id="profileUID">Loading...</strong>
-  </div>
-
-  <div class="info">
-   <span>Account Created</span>
-   <strong id="profileCreated">Loading...</strong>
-  </div>
+ <div class="hero">
+  <h1>Welcome to GameNova!</h1>
+  <p>Play games, challenge your brain and enjoy quizzes.</p>
+  <p id="homeStatus">Login to access your gaming dashboard.</p>
  </div>
 
+ <h2>🎮 Games</h2>
  <div class="grid">
-
-  <div class="profile-card">
-   <h3>⭐ Total Points</h3>
-   <h2>0</h2>
-   <p>Points system will be connected later.</p>
+  <div class="card">
+   <h3>🧠 Memory Match</h3>
+   <p>Find matching pairs by remembering the cards.</p>
+   <button class="playBtn" data-game="memory">Play Now</button>
   </div>
-
-  <div class="profile-card">
-   <h3>🏆 Leaderboard Rank</h3>
-   <h2>Not available yet</h2>
+  <div class="card">
+   <h3>🔢 Number Puzzle</h3>
+   <p>Arrange the numbers in the correct order.</p>
+   <button class="playBtn" data-game="puzzle">Play Now</button>
   </div>
-
-  <div class="profile-card">
-   <h3>🎮 Game Progress</h3>
-   <p>Your game progress will appear here.</p>
+  <div class="card">
+   <h3>⚡ Quick Tap Challenge</h3>
+   <p>Test how many times you can tap in 15 seconds.</p>
+   <button class="playBtn" data-game="tap">Play Now</button>
   </div>
-
-  <div class="profile-card">
-   <h3>📝 Quiz History</h3>
-   <p>Your quiz results will appear here.</p>
-  </div>
-
-  <div class="profile-card">
-   <h3>🔔 Notifications</h3>
-   <p>You have no notifications yet.</p>
-  </div>
-
-  <div class="profile-card">
-   <h3>🔗 Referral</h3>
-   <p>Your referral link will appear here.</p>
-  </div>
-
  </div>
 
- <button id="backBtn">← Back to Home</button>
-
+ <h2 style="margin-top:28px">❓ Quiz Zone</h2>
+ <div class="card">
+  <h3>General Knowledge Quiz</h3>
+  <p>Answer 10 questions and test your knowledge.</p>
+  <button class="playBtn" data-game="quiz">Start Quiz</button>
+ </div>
+ <p id="message"></p>
 </section>
 
-<p id="message">Checking login...</p>
+<section id="dashboardPage" class="hidden">
+ <div class="gameTop">
+  <h2>👤 My Dashboard</h2>
+  <button id="backHomeBtn" class="secondary">Back Home</button>
+ </div>
+ <div class="card profile">
+  <h3>Account Information</h3>
+  <p><b>Name:</b> <span id="profileName">-</span></p>
+  <p><b>Email:</b> <span id="profileEmail">-</span></p>
+  <p><b>User ID:</b> <span id="profileUid">-</span></p>
+  <p><b>Created:</b> <span id="profileCreated">-</span></p>
+ </div>
+ <div class="grid" style="margin-top:15px">
+  <div class="stat"><b>Total Points</b><p>Coming soon</p></div>
+  <div class="stat"><b>Leaderboard</b><p>Coming soon</p></div>
+  <div class="stat"><b>Game Progress</b><p>Coming soon</p></div>
+  <div class="stat"><b>Quiz History</b><p>Coming soon</p></div>
+  <div class="stat"><b>Notifications</b><p>Coming soon</p></div>
+  <div class="stat"><b>Referral</b><p>Coming soon</p></div>
+ </div>
+ <p class="small">Points and rewards are not active in this version.</p>
+</section>
 
-</main>
+<section id="gamePage" class="hidden">
+ <div class="gameTop">
+  <h2 id="gameTitle">Game</h2>
+  <button id="backGamesBtn" class="secondary">← Back to Games</button>
+ </div>
+ <div id="gameArea"></div>
+ <p id="gameMessage"></p>
+</section>
 
-<footer>© 2026 GameNova. All rights reserved.</footer>
+</div>
+
+<footer>GameNova © 2026</footer>
 
 <script type="module">
-
-import { initializeApp } from
-"https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
 
 import {
- getAuth,
- GoogleAuthProvider,
- signInWithPopup,
- onAuthStateChanged,
- signOut,
- setPersistence,
- browserLocalPersistence
-} from
-"https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+ getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged,
+ signOut, setPersistence, browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
 
 import {
- getFirestore,
- doc,
- getDoc,
- setDoc,
- serverTimestamp
-} from
-"https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
-
+ getFirestore, doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
 
 const firebaseConfig = {
  apiKey: "AIzaSyB6XXPK_aIQDDycQ5rCkYTznHUi2z1ti3c",
@@ -244,216 +257,503 @@ const firebaseConfig = {
  measurementId: "G-FBSQYQ8RNY"
 };
 
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const dashboardBtn = document.getElementById("dashboardBtn");
-const backBtn = document.getElementById("backBtn");
+const $ = id => document.getElementById(id);
 
-const userArea = document.getElementById("userArea");
-const authButtons = document.getElementById("authButtons");
-const userName = document.getElementById("userName");
-const message = document.getElementById("message");
-
-const homePage = document.getElementById("homePage");
-const dashboard = document.getElementById("dashboard");
-
-let authReady = false;
 let currentUser = null;
+let authReady = false;
+let gameCleanup = null;
 
+const homePage = $("homePage");
+const dashboardPage = $("dashboardPage");
+const gamePage = $("gamePage");
+const message = $("message");
+const gameArea = $("gameArea");
+const gameMessage = $("gameMessage");
 
-function showHome(){
- homePage.style.display = "block";
- dashboard.style.display = "none";
+function showPage(page){
+ homePage.classList.add("hidden");
+ dashboardPage.classList.add("hidden");
+ gamePage.classList.add("hidden");
+ page.classList.remove("hidden");
 }
-
-
-function showDashboard(){
-
- if(!authReady || !currentUser){
-  message.textContent = "Please login with Google first.";
-  showHome();
-  return;
- }
-
- homePage.style.display = "none";
- dashboard.style.display = "block";
-
- document.getElementById("profileName").textContent =
- currentUser.displayName || "Player";
-
- document.getElementById("profileEmail").textContent =
- currentUser.email || "Not available";
-
- document.getElementById("profileUID").textContent =
- currentUser.uid;
-}
-
 
 async function saveUserProfile(user){
-
  const userRef = doc(db,"users",user.uid);
- const userSnap = await getDoc(userRef);
+ const snapshot = await getDoc(userRef);
 
  const profileData = {
-  uid: user.uid,
-  name: user.displayName || "Player",
-  email: user.email || "",
-  updatedAt: serverTimestamp()
+  uid:user.uid,
+  name:user.displayName || "",
+  email:user.email || "",
+  updatedAt:serverTimestamp()
  };
 
- if(!userSnap.exists()){
+ if(!snapshot.exists()){
   profileData.createdAt = serverTimestamp();
  }
 
  await setDoc(userRef,profileData,{merge:true});
 
- const savedProfile = (await getDoc(userRef)).data();
+ const updated = await getDoc(userRef);
+ const data = updated.data();
 
- document.getElementById("profileName").textContent =
- savedProfile.name || "Player";
-
- document.getElementById("profileEmail").textContent =
- savedProfile.email || "Not available";
-
- document.getElementById("profileUID").textContent =
- savedProfile.uid || user.uid;
-
- if(savedProfile.createdAt){
-  const createdDate = savedProfile.createdAt.toDate();
-  document.getElementById("profileCreated").textContent =
-  createdDate.toLocaleDateString();
- }else{
-  document.getElementById("profileCreated").textContent =
-  "Not available";
- }
+ $("profileName").textContent = data.name || user.displayName || "-";
+ $("profileEmail").textContent = data.email || user.email || "-";
+ $("profileUid").textContent = data.uid || user.uid;
+ $("profileCreated").textContent =
+  data.createdAt?.toDate ? data.createdAt.toDate().toLocaleString() : "Recently";
 }
 
-
-function updateLoginUI(user){
-
+async function updateLoginUI(user){
  currentUser = user;
  authReady = true;
 
  if(user){
-
-  authButtons.style.display = "none";
-  userArea.style.display = "flex";
-  userName.textContent = user.displayName || "Player";
-
-  message.textContent = "Welcome! Loading your profile...";
-
-  saveUserProfile(user).then(()=>{
-   message.textContent = "Welcome! Your profile is saved.";
-  }).catch(error=>{
-   console.error("Profile error:",error);
-   message.textContent =
-   "Profile error: " + error.code;
-  });
-
+  $("loginBtn").classList.add("hidden");
+  $("dashboardBtn").classList.remove("hidden");
+  $("logoutBtn").classList.remove("hidden");
+  $("homeStatus").textContent = "You are logged in. Choose a game!";
+  try{
+   await saveUserProfile(user);
+   message.textContent = "Login and profile sync successful!";
+  }catch(error){
+   console.error(error);
+   message.textContent = "Profile sync error: " + error.message;
+  }
  }else{
-
-  authButtons.style.display = "flex";
-  userArea.style.display = "none";
-
-  message.textContent =
-  "Please login with Google to start playing.";
-
-  showHome();
+  $("loginBtn").classList.remove("hidden");
+  $("dashboardBtn").classList.add("hidden");
+  $("logoutBtn").classList.add("hidden");
+  $("homeStatus").textContent = "Login to access your gaming dashboard.";
+  message.textContent = "";
+  showPage(homePage);
  }
 }
-
 
 async function startAuthentication(){
-
  try{
   await setPersistence(auth,browserLocalPersistence);
-
-  onAuthStateChanged(auth,user=>{
-   updateLoginUI(user);
-  },error=>{
-   authReady = true;
-   message.textContent = "Authentication error: " + error.code;
-   authButtons.style.display = "flex";
-  });
-
+  onAuthStateChanged(auth,updateLoginUI);
  }catch(error){
-  authReady = true;
-  message.textContent = "Session error: " + error.code;
-  authButtons.style.display = "flex";
+  message.textContent = error.message;
  }
 }
 
+$("loginBtn").addEventListener("click",async()=>{
+ try{
+  await signInWithPopup(auth,provider);
+ }catch(error){
+  message.textContent = "Login failed: " + error.message;
+ }
+});
 
-loginBtn.addEventListener("click",async()=>{
+$("logoutBtn").addEventListener("click",async()=>{
+ try{
+  await signOut(auth);
+ }catch(error){
+  message.textContent = error.message;
+ }
+});
 
+$("dashboardBtn").addEventListener("click",()=>{
+ if(currentUser) showPage(dashboardPage);
+});
+
+$("backHomeBtn").addEventListener("click",()=>showPage(homePage));
+
+function stopGame(){
+ if(typeof gameCleanup === "function") gameCleanup();
+ gameCleanup = null;
+}
+
+$("backGamesBtn").addEventListener("click",()=>{
+ stopGame();
+ showPage(homePage);
+});
+
+function openGame(name){
  if(!authReady){
-  message.textContent = "Please wait...";
+  message.textContent = "Checking login. Please wait...";
+  return;
+ }
+ if(!currentUser){
+  message.textContent = "Please login with Google before playing.";
   return;
  }
 
- loginBtn.disabled = true;
- message.textContent = "Connecting to Google...";
+ stopGame();
+ gameMessage.textContent = "";
+ showPage(gamePage);
 
- try{
-  await signInWithPopup(auth,provider);
-  message.textContent = "Login successful!";
-
- }catch(error){
-  console.error("Login error:",error);
-  message.textContent = "Login error: " + error.code;
-
- }finally{
-  loginBtn.disabled = false;
+ if(name==="memory"){
+  $("gameTitle").textContent = "🧠 Memory Match";
+  startMemory();
+ }else if(name==="puzzle"){
+  $("gameTitle").textContent = "🔢 Number Puzzle";
+  startPuzzle();
+ }else if(name==="tap"){
+  $("gameTitle").textContent = "⚡ Quick Tap Challenge";
+  startTap();
+ }else if(name==="quiz"){
+  $("gameTitle").textContent = "❓ General Knowledge Quiz";
+  startQuiz();
  }
-});
-
-
-logoutBtn.addEventListener("click",async()=>{
-
- try{
-  await signOut(auth);
-  showHome();
-
- }catch(error){
-  message.textContent = "Logout error: " + error.message;
- }
-});
-
-
-dashboardBtn.addEventListener("click",showDashboard);
-backBtn.addEventListener("click",showHome);
-
+}
 
 document.querySelectorAll(".playBtn").forEach(button=>{
-
  button.addEventListener("click",()=>{
-
-  if(!authReady){
-   message.textContent = "Checking login. Please wait...";
-   return;
-  }
-
-  if(!currentUser){
-   message.textContent =
-   "Please login with Google before playing.";
-   return;
-  }
-
-  message.textContent =
-  "This game is being prepared. Please check back soon!";
+  openGame(button.dataset.game);
  });
 });
 
+/* MEMORY MATCH */
+function startMemory(){
+ gameArea.innerHTML = `
+  <div class="card">
+   <p>Find all 8 matching pairs.</p>
+   <p>Moves: <b id="moves">0</b> | Pairs: <b id="pairs">0/8</b></p>
+   <div class="memoryGrid" id="memoryGrid"></div>
+   <button id="memoryRestart">Restart Game</button>
+  </div>`;
+
+ const symbols=["🍎","🚀","🐼","⚽","🌟","🎮","🍕","🐸"];
+ let cards=[...symbols,...symbols].sort(()=>Math.random()-.5);
+ let first=null,lock=false,moves=0,pairs=0;
+ const grid=$("memoryGrid");
+
+ function render(){
+  grid.innerHTML="";
+  cards.forEach((symbol,index)=>{
+   const btn=document.createElement("button");
+   btn.className="memoryTile";
+   btn.textContent="❔";
+   btn.dataset.index=index;
+   btn.addEventListener("click",()=>flip(index,btn));
+   grid.appendChild(btn);
+  });
+ }
+
+ function flip(index,btn){
+  if(lock || btn.classList.contains("matched") ||
+     btn.classList.contains("open")) return;
+
+  btn.textContent=cards[index];
+  btn.classList.add("open");
+
+  if(first===null){
+   first={index,btn};
+   return;
+  }
+
+  moves++;
+  $("moves").textContent=moves;
+  const previous=first;
+  first=null;
+
+  if(cards[previous.index]===cards[index]){
+   previous.btn.classList.remove("open");
+   btn.classList.remove("open");
+   previous.btn.classList.add("matched");
+   btn.classList.add("matched");
+   pairs++;
+   $("pairs").textContent=pairs+"/8";
+   if(pairs===8) gameMessage.textContent="🎉 Congratulations! You matched all pairs!";
+  }else{
+   lock=true;
+   const timer=setTimeout(()=>{
+    previous.btn.textContent="❔";
+    btn.textContent="❔";
+    previous.btn.classList.remove("open");
+    btn.classList.remove("open");
+    lock=false;
+   },750);
+   gameCleanup=()=>clearTimeout(timer);
+  }
+ }
+
+ render();
+ $("memoryRestart").addEventListener("click",startMemory);
+}
+
+/* NUMBER PUZZLE */
+function startPuzzle(){
+ gameArea.innerHTML=`
+  <div class="card">
+   <p>Arrange numbers from 1 to 8. Keep the empty space at the end.</p>
+   <p>Moves: <b id="puzzleMoves">0</b></p>
+   <div class="puzzleGrid" id="puzzleGrid"></div>
+   <button id="puzzleRestart">Restart Puzzle</button>
+  </div>`;
+
+ let board=[1,2,3,4,5,6,7,8,0];
+ let moves=0;
+ const grid=$("puzzleGrid");
+
+ function neighbors(index){
+  const result=[];
+  const row=Math.floor(index/3),col=index%3;
+  if(row>0)result.push(index-3);
+  if(row<2)result.push(index+3);
+  if(col>0)result.push(index-1);
+  if(col<2)result.push(index+1);
+  return result;
+ }
+
+ function shuffle(){
+  board=[1,2,3,4,5,6,7,8,0];
+  let previous=-1;
+  for(let i=0;i<120;i++){
+   const empty=board.indexOf(0);
+   const choices=neighbors(empty).filter(x=>x!==previous);
+   const next=choices[Math.floor(Math.random()*choices.length)];
+   [board[empty],board[next]]=[board[next],board[empty]];
+   previous=empty;
+  }
+  if(board.every((v,i)=>v===i+1 && i<8)) shuffle();
+  moves=0;
+ }
+
+ function render(){
+  grid.innerHTML="";
+  board.forEach((value,index)=>{
+   const btn=document.createElement("button");
+   btn.className="puzzleTile"+(value===0?" blank":"");
+   btn.textContent=value===0?"":value;
+   btn.addEventListener("click",()=>{
+    const empty=board.indexOf(0);
+    if(!neighbors(empty).includes(index)) return;
+    [board[empty],board[index]]=[board[index],board[empty]];
+    moves++;
+    $("puzzleMoves").textContent=moves;
+    render();
+    if(board.every((v,i)=>v===i+1 && i<8) && board[8]===0){
+     gameMessage.textContent="🎉 Puzzle completed! Great job!";
+    }
+   });
+   grid.appendChild(btn);
+  });
+ }
+
+ shuffle();
+ render();
+ $("puzzleRestart").addEventListener("click",()=>{
+  gameMessage.textContent="";
+  shuffle();
+  render();
+ });
+}
+
+/* QUICK TAP */
+function startTap(){
+ gameArea.innerHTML=`
+  <div class="card">
+   <p>Tap as many times as you can in 15 seconds!</p>
+   <div class="tapBox">
+    <h2>Time: <span id="tapTime">15</span>s</h2>
+    <h2>Taps: <span id="tapCount">0</span></h2>
+   </div>
+   <button id="tapStart">Start Challenge</button>
+   <button id="tapButton" class="tapButton" disabled>TAP!</button>
+  </div>`;
+
+ let count=0,time=15,interval=null,running=false;
+ const tapButton=$("tapButton");
+ const startButton=$("tapStart");
+
+ tapButton.addEventListener("click",()=>{
+  if(!running)return;
+  count++;
+  $("tapCount").textContent=count;
+ });
+
+ startButton.addEventListener("click",()=>{
+  if(running)return;
+  count=0;time=15;running=true;
+  $("tapCount").textContent="0";
+  $("tapTime").textContent="15";
+  tapButton.disabled=false;
+  startButton.disabled=true;
+
+  interval=setInterval(()=>{
+   time--;
+   $("tapTime").textContent=time;
+   if(time<=0){
+    clearInterval(interval);
+    running=false;
+    tapButton.disabled=true;
+    startButton.disabled=false;
+    gameMessage.textContent="⏱ Time's up! Your total taps: "+count;
+   }
+  },1000);
+
+  gameCleanup=()=>clearInterval(interval);
+ });
+}
+
+/* QUIZ */
+const quizQuestions=[
+ {d:"Easy",q:"বাংলাদেশের রাজধানী কোনটি?",o:["ঢাকা","চট্টগ্রাম","খুলনা","রাজশাহী"],a:0},
+ {d:"Easy",q:"পৃথিবীর প্রাকৃতিক উপগ্রহ কোনটি?",o:["সূর্য","চাঁদ","মঙ্গল","শুক্র"],a:1},
+ {d:"Easy",q:"এক সপ্তাহে কয় দিন?",o:["৫","৬","৭","৮"],a:2},
+ {d:"Easy",q:"পানির রাসায়নিক সংকেত কী?",o:["CO2","O2","H2O","NaCl"],a:2},
+ {d:"Medium",q:"সৌরজগতের সবচেয়ে বড় গ্রহ কোনটি?",o:["পৃথিবী","বৃহস্পতি","মঙ্গল","শনি"],a:1},
+ {d:"Medium",q:"মানবদেহের সবচেয়ে বড় অঙ্গ কোনটি?",o:["হৃদপিণ্ড","ত্বক","ফুসফুস","যকৃত"],a:1},
+ {d:"Medium",q:"উদ্ভিদ খাদ্য তৈরির সময় কোন গ্যাস গ্রহণ করে?",o:["অক্সিজেন","নাইট্রোজেন","কার্বন ডাই-অক্সাইড","হাইড্রোজেন"],a:2},
+ {d:"Medium",q:"পৃথিবী সূর্যকে একবার প্রদক্ষিণ করতে প্রায় কত সময় নেয়?",o:["এক দিন","এক মাস","এক বছর","দুই বছর"],a:2},
+ {d:"Hard",q:"আলোর গতি প্রতি সেকেন্ডে প্রায় কত?",o:["৩০ হাজার কিমি","৩ লাখ কিমি","৩০ লাখ কিমি","৩ কোটি কিমি"],a:1},
+ {d:"Hard",q:"পর্যায় সারণিতে অক্সিজেনের পারমাণবিক সংখ্যা কত?",o:["৬","৭","৮","৯"],a:2},
+ {d:"Hard",q:"কম্পিউটারের CPU-এর পূর্ণরূপ কী?",o:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Power Unit"],a:0},
+ {d:"Hard",q:"কোন গ্রহের বলয় সবচেয়ে স্পষ্টভাবে দেখা যায়?",o:["মঙ্গল","শনি","বুধ","পৃথিবী"],a:1},
+ {d:"Easy",q:"বাংলাদেশের জাতীয় ফুল কোনটি?",o:["গোলাপ","শাপলা","জবা","সূর্যমুখী"],a:1},
+ {d:"Medium",q:"মৌমাছি কোন উপাদান সংগ্রহ করে মধু তৈরি করে?",o:["মধুরস","বালি","পাতা","মাটি"],a:0},
+ {d:"Hard",q:"পৃথিবীর বায়ুমণ্ডলে সবচেয়ে বেশি কোন গ্যাস রয়েছে?",o:["অক্সিজেন","কার্বন ডাই-অক্সাইড","নাইট্রোজেন","হাইড্রোজেন"],a:2}
+];
+
+function startQuiz(){
+ gameArea.innerHTML=`
+  <div class="card">
+   <label>Quiz Language</label>
+   <select id="quizLanguage">
+    <option value="bn">বাংলা</option>
+    <option value="en">English</option>
+   </select>
+   <label>Difficulty</label>
+   <select id="quizDifficulty">
+    <option value="Easy">Easy</option>
+    <option value="Medium">Medium</option>
+    <option value="Hard">Hard</option>
+   </select>
+   <button id="quizBegin">Start 10 Questions</button>
+  </div>
+  <div id="quizContent"></div>`;
+
+ $("quizBegin").addEventListener("click",beginQuiz);
+}
+
+const englishQuestions=[
+ {q:"What is the capital of Bangladesh?",o:["Dhaka","Chittagong","Khulna","Rajshahi"],a:0},
+ {q:"What is Earth's natural satellite?",o:["Sun","Moon","Mars","Venus"],a:1},
+ {q:"How many days are in a week?",o:["5","6","7","8"],a:2},
+ {q:"What is the chemical formula of water?",o:["CO2","O2","H2O","NaCl"],a:2},
+ {q:"Which is the largest planet in our solar system?",o:["Earth","Jupiter","Mars","Saturn"],a:1},
+ {q:"What is the largest organ of the human body?",o:["Heart","Skin","Lungs","Liver"],a:1},
+ {q:"Which gas do plants absorb during photosynthesis?",o:["Oxygen","Nitrogen","Carbon dioxide","Hydrogen"],a:2},
+ {q:"How long does Earth take to orbit the Sun?",o:["One day","One month","One year","Two years"],a:2},
+ {q:"What is the approximate speed of light per second?",o:["30,000 km","300,000 km","3 million km","30 million km"],a:1},
+ {q:"What is the atomic number of oxygen?",o:["6","7","8","9"],a:2},
+ {q:"What does CPU stand for?",o:["Central Processing Unit","Computer Personal Unit","Central Program Utility","Control Power Unit"],a:0},
+ {q:"Which planet is famous for its visible rings?",o:["Mars","Saturn","Mercury","Earth"],a:1},
+ {q:"What is the national flower of Bangladesh?",o:["Rose","Water lily","Hibiscus","Sunflower"],a:1},
+ {q:"What do honeybees collect to make honey?",o:["Nectar","Sand","Leaves","Soil"],a:0},
+ {q:"Which gas is most abundant in Earth's atmosphere?",o:["Oxygen","Carbon dioxide","Nitrogen","Hydrogen"],a:2}
+];
+
+function beginQuiz(){
+ const lang=$("quizLanguage").value;
+ const difficulty=$("quizDifficulty").value;
+ let pool=quizQuestions
+  .map((item,index)=>({item,index}))
+  .filter(x=>x.item.d===difficulty);
+
+ if(pool.length<10) pool=quizQuestions.map((item,index)=>({item,index}));
+
+ pool.sort(()=>Math.random()-.5);
+ const selected=pool.slice(0,10);
+ let current=0,score=0,answered=false,finished=false;
+
+ const content=$("quizContent");
+ const bn=lang==="bn";
+
+ function showQuestion(){
+  answered=false;
+  const source=selected[current].item;
+  const q=bn?source.q:englishQuestions[selected[current].index].q;
+  const options=bn?source.o:englishQuestions[selected[current].index].o;
+
+  content.innerHTML=`
+   <div class="question">
+    <p>Question ${current+1} / 10</p>
+    <h3>${q}</h3>
+    <div id="quizOptions"></div>
+    <p id="quizFeedback"></p>
+    <button id="quizSkip" class="secondary">${bn?"Skip":"Skip"}</button>
+    <button id="quizNext" disabled>${current===9?"Finish":"Next"}</button>
+   </div>`;
+
+  const optionBox=$("quizOptions");
+  options.forEach((option,index)=>{
+   const btn=document.createElement("button");
+   btn.className="option";
+   btn.textContent=String.fromCharCode(65+index)+". "+option;
+   btn.addEventListener("click",()=>answer(index,btn));
+   optionBox.appendChild(btn);
+  });
+
+  $("quizSkip").addEventListener("click",()=>{
+   if(answered)return;
+   answered=true;
+   $("quizFeedback").textContent=bn?"প্রশ্নটি বাদ দেওয়া হয়েছে।":"Question skipped.";
+   $("quizNext").disabled=false;
+  });
+
+  $("quizNext").addEventListener("click",()=>{
+   if(!answered)return;
+   if(current===9)finish();
+   else{current++;showQuestion();}
+  });
+ }
+
+ function answer(index,selectedButton){
+  if(answered)return;
+  answered=true;
+  const source=selected[current].item;
+  const correct=source.a;
+  const buttons=[...$("quizOptions").children];
+
+  buttons.forEach((btn,i)=>{
+   btn.disabled=true;
+   if(i===correct)btn.classList.add("correct");
+  });
+
+  if(index===correct){
+   score++;
+   selectedButton.classList.add("correct");
+   $("quizFeedback").textContent=bn?"সঠিক উত্তর!":"Correct answer!";
+  }else{
+   selectedButton.classList.add("wrong");
+   $("quizFeedback").textContent=
+    (bn?"সঠিক উত্তর: ":"Correct answer: ")+optionsText(correct);
+  }
+  $("quizNext").disabled=false;
+ }
+
+ function optionsText(index){
+  const source=selected[current].item;
+  return bn?source.o[index]:englishQuestions[selected[current].index].o[index];
+ }
+
+ function finish(){
+  finished=true;
+  content.innerHTML=`
+   <div class="card">
+    <h2>🎉 ${bn?"কুইজ শেষ!":"Quiz Completed!"}</h2>
+    <h3>${bn?"সঠিক উত্তর":"Correct answers"}: ${score} / 10</h3>
+    <p>${bn?"তোমার কুইজ সম্পন্ন হয়েছে।":"You have completed the quiz."}</p>
+    <button id="quizAgain">Play Again</button>
+   </div>`;
+  $("quizAgain").addEventListener("click",startQuiz);
+ }
+
+ showQuestion();
+}
 
 startAuthentication();
 
 </script>
-
 </body>
 </html>
